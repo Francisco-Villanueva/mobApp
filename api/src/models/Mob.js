@@ -9,15 +9,15 @@ module.exports = (sequelize) => {
     team: {
       type: DataTypes.STRING,
       allowNull: false,
-      // defaultValue: "ally",
+      defaultValue: "Ally",
     },
     color: {
       type: DataTypes.STRING,
-      // defaultValue: "blue",
+      defaultValue: "Blue",
     },
-    type: {
-      type: DataTypes.INTEGER,
-      // defaultValue: "zombie",
+    mobtype: {
+      type: DataTypes.STRING,
+      defaultValue: "Zombie",
     },
     life: {
       type: DataTypes.INTEGER,
