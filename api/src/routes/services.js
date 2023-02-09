@@ -39,6 +39,29 @@ try {
 }
 }
 
+const deleteMob = async (req,res)=>{
+  try {
+    const { id}=req.params
+    const info = await Mob.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if(info.length === 0 ){
+      return res.status(404).send('Mob not found!')
+    }else{
+      await Mob.destroy({
+        where:{id:id},
+      })
+
+      return res.status(200).send('Mob deeleted successfully')
+    }
+  } catch (error) {
+    
+  }
+}
+
 const editMob =async(req, res)=>{
   try {
     const { id } = req.params;
@@ -74,5 +97,6 @@ module.exports = {
   test,
   createMob,
   editMob,
-  getMobs
+  getMobs,
+  deleteMob
 };

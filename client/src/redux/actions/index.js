@@ -2,14 +2,15 @@ import axios from "axios";
 
 export const actionTypes = {
   GET_MOBS: "GET_MOBS",
-  CREATE_MOB: 'CREATE_MOB'
+  CREATE_MOB: 'CREATE_MOB',
+  DELETE_MOB: 'DELETE_MOB'
 };
 
 export function getMobs() {
   return async function (dispatch) {
     const json = await axios.get("http://localhost:4000/mobs");
 
-    console.log("entramos al getMobs(), retorna:  ", json.data);
+    // console.log("entramos al getMobs(), retorna:  ", json.data);
 
     return dispatch({
       type: actionTypes.GET_MOBS,
@@ -29,6 +30,37 @@ export function createMob (payload){
         type: actionTypes.CREATE_MOB,
         payload: newMob.data
       })
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+}
+export function deleteMob(id) {
+  return async function(){
+    try {
+      await axios.delete(`http://localhost:4000/deleteMob/${id}`)
+      
+      return {
+        type: actionTypes.DELETE_MOB,
+        payload: id,
+      };
+    } catch (error) {
+      throw new Error(error)
+      
+    }
+  }
+  
+}
+export function editMob (id, payload){
+  return async function(){
+    try {
+      const edited = await axios.put(
+        `http://localhost:4000/editMob/${id}`,
+        payload
+      );
+
+      return edited
     } catch (error) {
       throw new Error(error)
     }

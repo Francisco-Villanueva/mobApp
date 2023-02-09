@@ -14,6 +14,13 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state
         }
+        case actionTypes.DELETE_MOB:
+          return {
+            ...state,
+            allMobs: initialState.allMobs.filter(
+              (m) => m.id != action.payload
+            ),
+          };
     default:
       return state;
   }

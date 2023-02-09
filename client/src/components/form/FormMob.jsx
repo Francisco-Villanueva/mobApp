@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createMob } from "../../redux/actions";
+
 export default function FormMob() {
   const [teamState, setTeamState] = useState(true);
   const [lifeValue, setLifeValue] = useState(0);
@@ -18,7 +19,7 @@ export default function FormMob() {
   });
   const dispatch = useDispatch();
   const handleInputChange = (e) => {
-    console.log("data : ", e.target.name, " ::: ", e.target.value);
+    console.log("data : ", e.target.name, " : ", e.target.value);
     setMobData({ ...mobData, [e.target.name]: e.target.value });
   };
 
@@ -33,10 +34,13 @@ export default function FormMob() {
     e.preventDefault();
     dispatch(createMob(mobData));
     // console.log('Submiteamos. La data cargada es:   ', mobData)
+    // alert('Mob creado')
   };
   return (
     <div>
-      <form className="form-main" onSubmit={(e) => handleCreateMob(e)}>
+      <form className="form-main"
+       onSubmit={(e) => handleCreateMob(e)}
+       >
         <h1>MOB</h1>
         <div className="form-data">
           <Form.Group className=" formInput" controlId="formBasicEmail">
@@ -106,7 +110,7 @@ export default function FormMob() {
             />
           </Form.Group>
         </div>
-        <Button className="btn-submit" variant="primary" type="submit">
+        <Button  className="btn-submit" variant="primary" type="submit">
           Submit
         </Button>
       </form>
