@@ -9,6 +9,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allMobs: action.payload,
       };
+      case actionTypes.CREATE_MOB:
+        state.allMobs.push(action.payload)
+        return{
+          ...state
+        }
     default:
       return state;
   }

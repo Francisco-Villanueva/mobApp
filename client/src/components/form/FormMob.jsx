@@ -4,15 +4,24 @@ import "./Form.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import {useDispatch} from 'react-redux'
+import { createMob } from "../../redux/actions";
 export default function FormMob() {
   const [teamState, setTeamState] = useState(true);
   const [lifeValue, setLifeValue] = useState(0);
+  const [mobData, setMobData]=useState({
+    name:'',
+    type:'',
+    life:'',
+    team:'',
+    color: ''
+  })
+  const dispatch = useDispatch()
   const handleInputChange = (e) => {
-    console.log("NOMBRE : ", e.target.value);
+    console.log("data : ", e.target.name, ' ::: ', e.target.value);
+    setMobData({...mobData, [e.target.name]:e.target.value})
   };
-  const handleLife = (e) => {
-    setLifeValue(e.target.value);
-  };
+  
   const handleTeam = () => {
     if (teamState) {
       setTeamState(false);
@@ -20,9 +29,16 @@ export default function FormMob() {
       setTeamState(true);
     }
   };
+  const handleCreateMob =(e)=>{
+    e.preventDefault()
+    dispatch(createMob(mobData))
+    // console.log('Submiteamos. La data cargada es:   ', mobData)
+    
+  }
   return (
     <div className="form-main">
       <h1>MOB</h1>
+      <form onSubmit={e=>handleCreateMob(e)}>
       <div className="form-data">
         <Form.Group className=" formInput" controlId="formBasicEmail">
           <Form.Label>Name</Form.Label>
@@ -43,10 +59,11 @@ export default function FormMob() {
               Boss
             </Button>
             <Form.Control
-              name="name"
+              name="team"
               type="text"
               placeholder="Enter team"
               disabled={teamState}
+              onChange={(e) => handleInputChange(e)}
             />
           </div>
         </Form.Group>
@@ -57,11 +74,13 @@ export default function FormMob() {
           <Form.Select
             className="mb-3 formInput"
             aria-label="Default select example"
+            name={"type"}
+            onChange={(e) => handleInputChange(e)}
           >
             <option>Select mob's type</option>
-            <option value="1">Type 1</option>
-            <option value="2">Type 2</option>
-            <option value="3">Type 3</option>
+            <option value="zombie">Zombie</option>
+            <option value="esqueleton">Esqueleton</option>
+            <option value="creeper">Creeper</option>
           </Form.Select>
         </Form.Group>
 
@@ -69,21 +88,29 @@ export default function FormMob() {
           <Form.Label>Life</Form.Label>
           <div>
             <Form.Range
+              name='life'
               max={1000}
-              onChange={(e) => handleLife(e)}
+              onChange={(e) => handleInputChange(e)}
               defaultValue={0}
             />
-            <Form.Label className="lifeValue">{lifeValue} hp</Form.Label>
+            <Form.Label className="lifeValue">{mobData.life} hp</Form.Label>
           </div>
         </Form.Group>
 
         <Form.Group className=" formInput" controlId="formBasicEmail">
           <Form.Label>Color</Form.Label>
+          <Form.Control
+              name="color"
+              type="text"
+              placeholder="Enter color"
+              onChange={(e) => handleInputChange(e)}
+            />
         </Form.Group>
       </div>
-      <Button className="btn-submit" variant="primary" type="submit">
+      <Button  className="btn-submit" variant="primary" type="submit">
         Submit
       </Button>
+      </form>
     </div>
   );
 }
