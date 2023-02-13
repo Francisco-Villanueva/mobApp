@@ -5,3 +5,7 @@
   background-color: #111e37;
   font-family: "Montserrat";
 }
+p{
+  margin: 0 !important;
+  padding: 0;
+}
