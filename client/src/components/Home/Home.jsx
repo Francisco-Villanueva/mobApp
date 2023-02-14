@@ -7,9 +7,8 @@ import NavB from "../Navbar/NavB";
 export default function Home() {
   return (
     <div className="home-main">
-      {/* <NavB/> */}
-
-      
+      <h1 className="title-home">Mob APP</h1>
+      <img src={craft} alt="" />
     </div>
   );
 }

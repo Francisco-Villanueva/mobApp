@@ -8,8 +8,7 @@ import { useDispatch } from "react-redux";
 import { createMob } from "../../redux/actions";
 
 export default function FormMob() {
-  const [teamState, setTeamState] = useState(true);
-  const [lifeValue, setLifeValue] = useState(0);
+  // const [lifeValue, setLifeValue] = useState(0);
   const [mobData, setMobData] = useState({
     name: "",
     type: "",
@@ -23,13 +22,6 @@ export default function FormMob() {
     setMobData({ ...mobData, [e.target.name]: e.target.value });
   };
 
-  const handleTeam = () => {
-    if (teamState) {
-      setTeamState(false);
-    } else {
-      setTeamState(true);
-    }
-  };
   const handleCreateMob = (e) => {
     e.preventDefault();
     dispatch(createMob(mobData));
@@ -37,13 +29,14 @@ export default function FormMob() {
     // alert('Mob creado')
   };
   return (
-    <div>
-      <form className="form-main"
-       onSubmit={(e) => handleCreateMob(e)}
-       >
-        <h1>MOB</h1>
+    <div className="form-container">
+      <form className="form-main" onSubmit={(e) => handleCreateMob(e)}>
+        <h1 className="slide-in-blurred-left">MOB</h1>
         <div className="form-data">
-          <Form.Group className=" formInput" controlId="formBasicEmail">
+          <Form.Group
+            className=" slide-in-blurred-left formInput"
+            controlId="formBasicEmail"
+          >
             <Form.Label>Name</Form.Label>
             <Form.Control
               name="name"
@@ -52,30 +45,26 @@ export default function FormMob() {
               onChange={(e) => handleInputChange(e)}
             />
           </Form.Group>
-          <Form.Group className=" formInput" controlId="formBasicEmail">
+
+          <Form.Group className="slide-in-blurred-left formInput">
             <Form.Label>Team</Form.Label>
-            <div className="teamInput">
-              <Button
-                variant={teamState ? "success" : "outline-success"}
-                onClick={handleTeam}
-              >
-                Boss
-              </Button>
-              <Form.Control
-                name="team"
-                type="text"
-                placeholder="Enter team"
-                disabled={teamState}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
+            <Form.Select
+              className="mb-3 formInput"
+              aria-label="Default select example"
+              name={"team"}
+              onChange={(e) => handleInputChange(e)}
+            >
+              <option>Select mob's team</option>
+              <option value="boss">boss</option>
+              <option value="ally">ally</option>
+            </Form.Select>
           </Form.Group>
 
-          <Form.Group className=" formInput">
+          <Form.Group className=" slide-in-blurred-left formInput">
             <Form.Label>Type </Form.Label>
 
             <Form.Select
-              className="mb-3 formInput"
+              className="mb-3  formInput"
               aria-label="Default select example"
               name={"type"}
               onChange={(e) => handleInputChange(e)}
@@ -87,7 +76,7 @@ export default function FormMob() {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group className=" formInput">
+          <Form.Group className="slide-in-blurred-left formInput">
             <Form.Label>Life</Form.Label>
             <div>
               <Form.Range
@@ -100,7 +89,10 @@ export default function FormMob() {
             </div>
           </Form.Group>
 
-          <Form.Group className=" formInput" controlId="formBasicEmail">
+          <Form.Group
+            className=" slide-in-blurred-left formInput"
+            controlId="formBasicEmail"
+          >
             <Form.Label>Color</Form.Label>
             <Form.Control
               name="color"
@@ -110,7 +102,10 @@ export default function FormMob() {
             />
           </Form.Group>
         </div>
-        <Button  className="btn-submit" variant="primary" type="submit">
+        <Button
+          className="slide-in-blurred-left-btnSubmit btn-submit"
+          type="submit"
+        >
           Submit
         </Button>
       </form>
