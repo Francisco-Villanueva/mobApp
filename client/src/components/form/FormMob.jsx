@@ -5,10 +5,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createMob } from "../../redux/actions";
+import { createMob, editMob } from "../../redux/actions";
+import { useParams } from "react-router-dom";
 
-export default function FormMob() {
+export default function FormMob({editing}) {
   // const [lifeValue, setLifeValue] = useState(0);
+  const {id}  = useParams();
   const [mobData, setMobData] = useState({
     name: "",
     type: "",
@@ -22,15 +24,22 @@ export default function FormMob() {
     setMobData({ ...mobData, [e.target.name]: e.target.value });
   };
 
-  const handleCreateMob = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createMob(mobData));
+
+    if(editing){
+      // dispatch(editMob(id,mobData))
+      alert('editado!')
+    }else{
+      alert('creado!')
+      // dispatch(createMob(mobData));
+    }
     // console.log('Submiteamos. La data cargada es:   ', mobData)
     // alert('Mob creado')
   };
   return (
     <div className="form-container">
-      <form className="form-main" onSubmit={(e) => handleCreateMob(e)}>
+      <form className="form-main" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="slide-in-blurred-left">MOB</h1>
         <div className="form-data">
           <Form.Group
@@ -106,7 +115,7 @@ export default function FormMob() {
           className="slide-in-blurred-left-btnSubmit btn-submit"
           type="submit"
         >
-          Submit
+          {editing ?'Edit Mob':'Submit'}
         </Button>
       </form>
     </div>

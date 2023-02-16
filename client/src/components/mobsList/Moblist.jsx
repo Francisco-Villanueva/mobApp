@@ -4,15 +4,19 @@ import "./MobList.css";
 import Table from "react-bootstrap/Table";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faCode } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faCode, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { deleteMob } from "../../redux/actions";
+import { deleteMob, editMob } from "../../redux/actions";
 import { Link } from "react-router-dom";
 
 import swal from "sweetalert";
 export default function MobList({ mobs }) {
   const dispatch = useDispatch();
 
+
+  const handleEdit =(id)=>{
+      dispatch(editMob(id))
+  }
   const handleDelete = (id) => {
     swal({
       title: "Are you sure?",
@@ -63,6 +67,12 @@ export default function MobList({ mobs }) {
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
+                  <Link
+                    to={`/ediMob/${m.id}`}
+                    className="btnForm-style"
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Link>
                 </td>
               </tr>
             ))

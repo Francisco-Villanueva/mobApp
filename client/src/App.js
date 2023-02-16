@@ -7,7 +7,7 @@ import Moblist from "./components/mobsList/Moblist";
 import NavB from "./components/Navbar/NavB";
 import {useDispatch, useSelector} from 'react-redux'
 import { useEffect } from "react";
-import { deleteMob, getMobs } from "./redux/actions";
+import { deleteMob, editMob, getMobs } from "./redux/actions";
 import MobCode from "./components/Codigo/MobCode";
 function App() {
   const dispatch = useDispatch()
@@ -26,10 +26,12 @@ function App() {
       <NavB/>
       <Routes>
         <Route  path="/" element={<Home />} />
-        <Route  path="/form" element={<FormMob />} />
+        <Route  path="/form" element={<FormMob editing={false}/>} />
         <Route  path="/mobList" element={<Moblist  mobs={mobsLista}/>} />
         <Route  path="/mobcode" element={<MobCode  mobs={mobsLista}/>} />
+        <Route  path="/ediMob/:id" element={<FormMob editing={true}/>} />
       </Routes>
+      
     </div>
   );
 }
