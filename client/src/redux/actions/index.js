@@ -18,6 +18,15 @@ export function getMobs() {
     });
   };
 }
+export function getMobInfo(id) {
+  return async function () {
+    const json = await axios.get(`http://localhost:4000/mobs/${id}`);
+
+    console.log("entramos al getMobInfo(), retorna:  ", json.data);
+
+    return json.data;
+  };
+}
 
 export function createMob(payload) {
   return async function (dispatch) {
@@ -60,9 +69,10 @@ export function editMob(id, payload) {
         `http://localhost:4000/editMob/${id}`,
         payload
       );
-
+      swal("Mob edited!", "You edit a mob succesfully!", "success");
       return edited;
     } catch (error) {
+      swal("Data mistakes!", "Check mobs data", "error");
       throw new Error(error);
     }
   };

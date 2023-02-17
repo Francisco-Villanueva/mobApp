@@ -15,6 +15,17 @@ const getMobs = async (req, res) => {
   }
 };
 
+const getMobInfo = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const info = await Mob.findOne({ where: { id: id } });
+
+    res.status(200).send(info);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 const createMob = async (req, res) => {
   try {
     const { name, team, life, color, type } = req.body;
@@ -94,4 +105,5 @@ module.exports = {
   editMob,
   getMobs,
   deleteMob,
+  getMobInfo,
 };

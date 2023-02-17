@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Form.css";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createMob, editMob } from "../../redux/actions";
+import { createMob, editMob, getMobInfo } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 
-export default function FormMob({editing}) {
+export default function FormMob({ editing }) {
   // const [lifeValue, setLifeValue] = useState(0);
-  const {id}  = useParams();
+
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  // let mobInfo = dispatch(getMobInfo(id));
+
   const [mobData, setMobData] = useState({
     name: "",
     type: "",
@@ -18,7 +23,7 @@ export default function FormMob({editing}) {
     team: "",
     color: "",
   });
-  const dispatch = useDispatch();
+
   const handleInputChange = (e) => {
     console.log("data : ", e.target.name, " : ", e.target.value);
     setMobData({ ...mobData, [e.target.name]: e.target.value });
@@ -27,12 +32,11 @@ export default function FormMob({editing}) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(editing){
-      // dispatch(editMob(id,mobData))
-      alert('editado!')
-    }else{
-      alert('creado!')
-      // dispatch(createMob(mobData));
+    if (editing) {
+      dispatch(editMob(id, mobData));
+    } else {
+      // alert("creado!");
+      dispatch(createMob(mobData));
     }
     // console.log('Submiteamos. La data cargada es:   ', mobData)
     // alert('Mob creado')
@@ -115,7 +119,7 @@ export default function FormMob({editing}) {
           className="slide-in-blurred-left-btnSubmit btn-submit"
           type="submit"
         >
-          {editing ?'Edit Mob':'Submit'}
+          {editing ? "Edit Mob" : "Submit"}
         </Button>
       </form>
     </div>
