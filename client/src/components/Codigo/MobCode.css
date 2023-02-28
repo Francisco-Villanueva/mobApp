@@ -13,3 +13,75 @@ code {
   color: #fff;
   text-align: start;
 }
+.react-syntax-highlighter-code {
+  padding: 0 1em;
+  font-family: "Fira Code", "Consolas", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5em;
+}
+
+.react-syntax-highlighter-line-number {
+  display: inline-block;
+  text-align: right;
+  padding-right: 1em;
+  color: #ccc;
+  font-size: 14px;
+  user-select: none;
+}
+
+.react-syntax-highlighter .token.comment,
+.react-syntax-highlighter .token.prolog,
+.react-syntax-highlighter .token.doctype,
+.react-syntax-highlighter .token.cdata {
+  color: #999;
+}
+
+.react-syntax-highlighter .token.punctuation {
+  color: #ccc;
+}
+
+.react-syntax-highlighter .token.namespace {
+  opacity: 0.7;
+}
+
+.react-syntax-highlighter .token.operator,
+.react-syntax-highlighter .token.boolean,
+.react-syntax-highlighter .token.number {
+  color: #ff7b72;
+}
+
+.react-syntax-highlighter .token.property,
+.react-syntax-highlighter .token.tag,
+.react-syntax-highlighter .token.constant,
+.react-syntax-highlighter .token.symbol,
+.react-syntax-highlighter .token.deleted {
+  color: #f92672;
+}
+
+.react-syntax-highlighter .token.selector,
+.react-syntax-highlighter .token.attr-name,
+.react-syntax-highlighter .token.string,
+.react-syntax-highlighter .token.char,
+.react-syntax-highlighter .token.builtin,
+.react-syntax-highlighter .token.inserted {
+  color: #a6e22e;
+}
+
+.react-syntax-highlighter .token.entity,
+.react-syntax-highlighter .token.url,
+.react-syntax-highlighter .language-css .token.string,
+.react-syntax-highlighter .style .token.string {
+  color: #a6e22e;
+  background: #272822;
+}
+
+.react-syntax-highlighter .token.atrule,
+.react-syntax-highlighter .token.attr-value,
+.react-syntax-highlighter .token.function,
+.react-syntax-highlighter .token.class-name {
+  color: #e6db74;
+}
+
+.react-syntax-highlighter .token.keyword {
+  color: #66d;
+}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
+
 export const actionTypes = {
   GET_MOBS: "GET_MOBS",
   CREATE_MOB: "CREATE_MOB",

@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <div className="home-main">
       <h1 className="title-home">Mob APP</h1>
-      <img src={craft} alt="" />
     </div>
   );
 }

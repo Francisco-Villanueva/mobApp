@@ -107,10 +107,11 @@ export default function FormMob({ editing }) {
             controlId="formBasicEmail"
           >
             <Form.Label>Color</Form.Label>
-            <Form.Control
+            <input
+              className="input-color"
+              id="colorPicker"
+              type="color"
               name="color"
-              type="text"
-              placeholder="Enter color"
               onChange={(e) => handleInputChange(e)}
             />
           </Form.Group>
