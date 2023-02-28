@@ -15,7 +15,7 @@ function App() {
 
   dispatch(getMobs());
   useEffect(() => {
-    console.log("LISTA DE MOBS: ", mobsLista);
+    // console.log("LISTA DE MOBS: ", mobsLista);
   }, [4]);
 
   // VER CÓMO MIERDA SE HACE PARA QUE ACTUALICE EN "VIVO" LOS VALORES DE mobLista
