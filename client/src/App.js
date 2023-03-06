@@ -13,23 +13,28 @@ function App() {
   const dispatch = useDispatch();
   const mobsLista = useSelector((s) => s.allMobs);
 
-  dispatch(getMobs());
   useEffect(() => {
-    // console.log("LISTA DE MOBS: ", mobsLista);
-  }, [4]);
+    dispatch(getMobs());
+  }, [mobsLista]);
 
   // VER CÓMO MIERDA SE HACE PARA QUE ACTUALICE EN "VIVO" LOS VALORES DE mobLista
 
   return (
     <div className="App">
       <NavB />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/form" element={<FormMob editing={false} />} />
-        <Route path="/mobList" element={<Moblist mobs={mobsLista} />} />
-        <Route path="/mobcode" element={<MobCode mobs={mobsLista} />} />
-        <Route path="/ediMob/:id" element={<FormMob editing={true} />} />
-      </Routes>
+      <div className="app-body">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/form" element={<FormMob editing={false} />} />
+          <Route path="/mobList" element={<Moblist mobs={mobsLista} />} />
+          <Route path="/mobcode" element={<MobCode mobs={mobsLista} />} />
+          <Route path="/ediMob/:id" element={<FormMob editing={true} />} />
+        </Routes>
+      </div>
+
+      {/* <p className="developer">
+        Created by <b>Villanueva, Francisco</b>{" "}
+      </p> */}
     </div>
   );
 }

@@ -29,16 +29,16 @@ const getMobInfo = async (req, res) => {
 const createMob = async (req, res) => {
   try {
     const { name, team, life, color, type } = req.body;
-    if (!name || !team || !life || !color || !type) {
+    if (!name || !team || !color || !type) {
       return res.status(400).send("error en los datos");
     }
 
     const newMob = await Mob.create({
       name: name,
       team: team,
-      life: life,
       color: color,
       mobType: type,
+      life: team === "boss" ? 1000 : 50,
     });
 
     res.status(200).send(newMob);

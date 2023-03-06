@@ -1,10 +1,6 @@
 .App {
   text-align: center;
-  display: grid;
   min-height: 100vh;
-  /* background: url(./imgs/mobFondo.webp); */
-  /* background-position: center;
-  background-size: cover; */
   background: rgb(151, 159, 255);
   background: linear-gradient(
     117deg,
@@ -16,10 +12,20 @@
   font-family: "Montserrat";
   -webkit-animation: bg-pan-top 8s infinite both;
   animation: bg-pan-top 8s infinite both;
+
+  display: grid;
+}
+.app-body {
+  display: flex;
+  justify-content: center;
 }
 .bg-pan-left {
   -webkit-animation: bg-pan-left 8s both;
   animation: bg-pan-left 8s both;
+}
+.developer {
+  color: #fff;
+  position: absolute;
 }
 p {
   margin: 0 !important;

@@ -43,7 +43,7 @@ export function createMob(payload) {
         payload: newMob.data,
       });
     } catch (error) {
-      swal("Data mistakes!", "Check mobs data", "error");
+      swal("Data mistakes!", error, "error");
       console.log(error);
       throw new Error(error);
     }

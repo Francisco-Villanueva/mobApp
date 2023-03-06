@@ -16,7 +16,12 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 export default function MobList({ mobs }) {
   const dispatch = useDispatch();
+  const allyArr = mobs.filter((m) => m.team !== "boss");
+  const bossArr = mobs.filter((m) => m.team !== "ally");
 
+  const mobsOrder = bossArr.concat(allyArr);
+
+  console.log("MOBSORDER : ", mobsOrder);
   const handleDelete = (id) => {
     swal({
       title: "Are you sure?",
@@ -52,7 +57,7 @@ export default function MobList({ mobs }) {
         </thead>
         <tbody>
           {mobs.length !== 0 ? (
-            mobs.map((m) => (
+            mobsOrder.map((m) => (
               <tr className="table-row" key={m.id}>
                 <td>{1}</td>
                 <td>{m.name}</td>

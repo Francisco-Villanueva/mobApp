@@ -52,6 +52,7 @@ export default function FormMob({ editing }) {
           >
             <Form.Label>Name</Form.Label>
             <Form.Control
+              autoComplete="off"
               name="name"
               type="text"
               placeholder="Enter name"
