@@ -326,7 +326,57 @@ function tick{
     #
     #Custom Mobs Behavior
     #This is where the behavior for all of the remodeled mobs is covered and broken down by subsection.
+ 
+    execute if entity @s[tag=kip.mob] run { // REF #1 START
+      name mob_shared_behavior
 
+      #Macro for mob control trigger settings. Do not remove!
+      kipper_mob_trigger_settings
+
+      #
+      #
+      # TARGET SETTINGS
+      #
+      #
+      #Determines how mobs seek out their targets. Right now all ally mobs share the same target-seeking parameters, 
+      #but you can break it up for specific mobs if you want. The ally_line_of_sight function checks
+      #that they aren't targeting something they can't see. Note that this isn't perfect, as if one mob targets a mob,
+      #it'll be considered a valid target for all of them.
+      #Generally, you probably don't need to change this section.
+      #If mobs_attack enabled, searches for target
+
+      execute if entity @s[tag=kip.can_attack] run { // #REF 2
+        name mob_target_seek
+
+        #Boss
+ ${bossArr
+   .map(
+     (e, i) =>
+       `\t\texecute if entity @s[tag=kip.mob.boss_${numberIndex(
+         i + 1
+       )}] anchored eyes run {
+                  name boss_seek
+                  execute as @e[tag=kip.mob.ally,distance=..20] run {
+                      name boss_line_of_sight
+                      LOOP(20,i){
+                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @s[type=#kip:mobs,tag=!kip.mob.boss,distance=..3] add kip.target 
+                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @e[type=player,distance=..3] add kip.target 
+                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> unless block ~ ~ ~ #kip:nonsolid run tag @s add kip.blocked
+                      }
+                      tag @s remove kip.blocked
+                  }
+              } \n`
+   )
+   .join("")}
+       
+
+        #Allies
+
+      } // #REF 2 END
+
+
+    }  // REF #1 END
+    
 } // end function tick
  
         
