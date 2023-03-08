@@ -240,6 +240,7 @@ ${allyArr
 #      ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀    ▀ 
 
 function tick{
+
   #████████ ██  ██████ ██   ██     ██████  ██       █████  ██    ██ ███████ ██████  
   #   ██    ██ ██      ██  ██      ██   ██ ██      ██   ██  ██  ██  ██      ██   ██ 
   #   ██    ██ ██      █████       ██████  ██      ███████   ████   █████   ██████  
@@ -261,7 +262,7 @@ function tick{
 
      #
      #
-     #
+     # triggers
      #
      #
      # 
@@ -286,21 +287,47 @@ function tick{
   execute as @e[type=!player] at @s run {
     name tick_entities
   #
-  #
+  # SPAWN EGGS
   #
   #
   #
   #Spawn Egg summons
-        #This is where the Markers that come out of the Spawn Egg items (Give section) become the appropriate mob.
-        #This way, you can define a summon animation or otherwise just scale them up appropriately in their Spawn function
+  #This is where the Markers that come out of the Spawn Egg items (Give section) become the appropriate mob.
+  #This way, you can define a summon animation or otherwise just scale them up appropriately in their Spawn function
        
        
-        execute if entity @s[tag=kip.summon] run {
-          name spawn_eggs_shared
-          #⚠️SPAWN_EGGS
+    execute if entity @s[tag=kip.summon] run {
+    name spawn_eggs_shared
+    ${bossArr
+      .map(
+        (e, i) =>
+          `\texecute if entity @s[tag=kip.summon.boss_${numberIndex(
+            i + 1
+          )}] run function kip:spawns/mob_boss_${numberIndex(i + 1)} \n`
+      )
+      .join("")}${allyArr
+          .map(
+            (e, i) =>
+              `\texecute if entity @s[tag=kip.summon.${numberIndex(
+                i + 1
+              )}] run function kip:spawns/ally_${numberIndex(i + 1)} \n`
+          )
+          .join("")}
           kill @s
-      }
-}
+    }
+
+    #costume behavior macro. Do not remove!
+    kipper_costume_behavior
+
+    #
+    # CUSTOM MOBS
+    #
+    #
+    #
+    #Custom Mobs Behavior
+    #This is where the behavior for all of the remodeled mobs is covered and broken down by subsection.
+
+} // end function tick
  
         
 `}
