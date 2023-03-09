@@ -1,13 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./MobCode.css";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import Swal from "sweetalert2";
 import {
   darcula,
   tomorrow,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-
+import { saveAs } from "file-saver";
 export default function MobCode({ mobs }) {
+  const [code, setCode] = useState(``);
+  const prueba = useRef();
+
   const allyArr = mobs.filter((m) => m.team !== "boss");
   const bossArr = mobs.filter((m) => m.team !== "ally");
   const mobsOrder = bossArr.concat(allyArr);
@@ -50,12 +54,50 @@ export default function MobCode({ mobs }) {
         break;
     }
   };
+  const downloadFile = () => {
+    const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "code.mc");
+  };
+  const copyToClipboard = () => {
+    const txt = document.getElementById("codigoId").innerText;
+    // console.log(txt);
+    setCode(txt);
+    console.log(Swal.fire().params);
+    Swal.fire({
+      position: "bottom-end",
+      icon: "success",
+      text: "Done!",
+      footer: "Code copied succesfully",
+      showConfirmButton: false,
+      timer: 1200,
+      width: "15em",
+      fon: "#fff",
+      iconColor: "#4e5ca9c9",
+      background: "rgba(0,0,0,1)",
+    });
+  };
+
+  const btnClass = code.length === 0 ? "btn-disabled " : "code-btns ";
   return (
     <div className="codeMob-main">
+      <button className="code-btns " onClick={copyToClipboard}>
+        Save code
+      </button>
+      <button
+        className={btnClass}
+        disabled={code.length === 0}
+        onClick={downloadFile}
+      >
+        Download file
+      </button>
+
       <SyntaxHighlighter
         className="code-style"
         language="javascript"
         style={darcula}
+        value={code}
+        ref={prueba}
+        id="codigoId"
       >
         {`import ./macros/aoe_projectile.mcm
 import ./macros/spawn_aoe_projectile.mcm
@@ -369,14 +411,14 @@ function tick{
    )
    .join("")}
        
-
+// La funcion de arriba hay que revisarla y ver que esté bien "gramaticalmente".           
         #Allies
 
       } // #REF 2 END
 
 
     }  // REF #1 END
-    
+
 } // end function tick
  
         

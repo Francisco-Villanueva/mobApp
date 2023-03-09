@@ -11,3 +11,21 @@
 .code-style {
   text-align: start !important;
 }
+.code-btns {
+  border: none;
+  outline: none;
+  background-color: #1e264b;
+  color: #fff;
+  padding: 0.3em 0.9em;
+  border-radius: 0.25em;
+  margin: 0 1em;
+}
+.btn-disabled {
+  background-color: #49537d;
+  border: none;
+  outline: none;
+  color: #7a7272;
+  padding: 0.3em 0.9em;
+  border-radius: 0.25em;
+  transition: all 0.3s;
+}

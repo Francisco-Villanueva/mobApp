@@ -37,7 +37,7 @@ const createMob = async (req, res) => {
       name: name,
       team: team,
       color: color,
-      mobType: type,
+      mobtype: type,
       life: team === "boss" ? 1000 : 50,
     });
 

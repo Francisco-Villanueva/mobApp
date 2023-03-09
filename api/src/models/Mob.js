@@ -23,7 +23,6 @@ module.exports = (sequelize) => {
     },
     mobtype: {
       type: DataTypes.STRING,
-      defaultValue: "Zombie",
     },
     life: {
       type: DataTypes.INTEGER,

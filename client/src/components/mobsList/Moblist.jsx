@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { deleteMob, editMob } from "../../redux/actions";
 import { Link } from "react-router-dom";
 
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 export default function MobList({ mobs }) {
   const dispatch = useDispatch();
   const allyArr = mobs.filter((m) => m.team !== "boss");
@@ -23,16 +23,18 @@ export default function MobList({ mobs }) {
 
   console.log("MOBSORDER : ", mobsOrder);
   const handleDelete = (id) => {
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this Mob!",
       icon: "warning",
-      buttons: true,
+      iconColor: "#000",
+      confirmButtonText: "Yes, delete it!",
+      showCancelButton: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+    }).then((result) => {
+      if (result.isConfirmed) {
         dispatch(deleteMob(id));
-        swal(" Your Mob has been deleted!", {
+        Swal.fire(" Your Mob has been deleted!", {
           icon: "success",
         });
       }
