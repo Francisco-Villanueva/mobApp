@@ -12,7 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { deleteMob, editMob } from "../../redux/actions";
-import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
 import FormMob from "../form/FormMob";
@@ -26,7 +25,10 @@ export default function MobList({ mobs }) {
     setShowModal(true);
     setEditing(true)
   } 
-  const handleShowModal = () => setShowModal(true);
+  const handleShowModal = () => {
+    setShowModal(true)
+    setEditing(false)
+  };
 
   const dispatch = useDispatch();
   const allyArr = mobs.filter((m) => m.team !== "boss");
