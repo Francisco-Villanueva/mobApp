@@ -22,7 +22,7 @@
   border-radius: 1rem;
   width: 15vw;
   margin: auto;
-  font-weight: 600;
+  
   padding: 1em 0;
   cursor: pointer;
 
@@ -42,6 +42,10 @@
   gap: 1rem;
   align-items: center;
   color: #fff;
+  border: none;
+  background: none;
+  margin: 0 auto;
+  font-weight: 600;
 }
 .table-row {
   background-color: #d7e3f7;

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MobList.css";
 
 import Table from "react-bootstrap/Table";
+import {Button, Modal, Form } from 'react-bootstrap'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,7 +15,19 @@ import { deleteMob, editMob } from "../../redux/actions";
 import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
+import FormMob from "../form/FormMob";
+
 export default function MobList({ mobs }) {
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState(false)
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModalEdit = () =>{
+    setShowModal(true);
+    setEditing(true)
+  } 
+  const handleShowModal = () => setShowModal(true);
+
   const dispatch = useDispatch();
   const allyArr = mobs.filter((m) => m.team !== "boss");
   const bossArr = mobs.filter((m) => m.team !== "ally");
@@ -74,9 +87,11 @@ export default function MobList({ mobs }) {
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
-                  <Link to={`/ediMob/${m.id}`} className="btnForm-style">
+                  <button className="btnForm-style"  onClick={handleShowModalEdit}>
+
                     <FontAwesomeIcon icon={faPenToSquare} />
-                  </Link>
+                  </button>
+                  
                 </td>
               </tr>
             ))
@@ -87,13 +102,23 @@ export default function MobList({ mobs }) {
           )}
         </tbody>
       </Table>
+      <div>
+       <FormMob editing={editing} showModal={showModal}  handleCloseModal={handleCloseModal}/>
+      </div>
+      
 
       <div className="scale-in-ver-bottom code-generator-main">
-        <Link className="code-generator" to={`/mobcode`}>
-          <p>Generate Code</p>
+      <button onClick={handleShowModal}  className="code-generator" >
+           <p>Abrir form</p>
+          <FontAwesomeIcon icon={faCode} />
+      </button>
+      </div>
+      {/* <div className="scale-in-ver-bottom code-generator-main">
+        <Link className="code-generator" to={`/form`}>
+          <p>Add Mob</p>
           <FontAwesomeIcon icon={faCode} />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -72,15 +72,15 @@ const deleteMob = async (req, res) => {
 const editMob = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, team, life, color, type } = req.body;
+    const { name, team, color, type } = req.body;
 
     const update = await Mob.update(
       {
         name: name,
         team: team,
-        life: life,
+        life: team === "boss" ? 1000 : 50,
         color: color,
-        type: type,
+        mobtype: type,
       },
       {
         where: {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
-
+import Swal from "sweetalert2";
 export const actionTypes = {
   GET_MOBS: "GET_MOBS",
   CREATE_MOB: "CREATE_MOB",
@@ -37,7 +37,18 @@ export function createMob(payload) {
         payload
       );
       console.log("Entramos al CreateMob() : retorna, ", newMob);
-      swal("Mob created!", "You create a mob succesfully!", "success");
+      Swal.fire({
+        position: "bottom-end",
+        icon: "success",
+        text: "Done!",
+        footer: "Mob created succesfully!",
+        showConfirmButton: false,
+        timer: 1200,
+        width: "15em",
+        fon: "#fff",
+        iconColor: "#4e5ca9c9",
+        background: "rgba(0,0,0,1)",
+      });
       return dispatch({
         type: actionTypes.CREATE_MOB,
         payload: newMob.data,
@@ -70,9 +81,21 @@ export function editMob(id, payload) {
         `http://localhost:4000/editMob/${id}`,
         payload
       );
-      swal("Mob edited!", "You edit a mob succesfully!", "success");
+      Swal.fire({
+        position: "bottom-end",
+        icon: "success",
+        text: "Done!",
+        footer: "Mob edited succesfully!",
+        showConfirmButton: false,
+        timer: 1200,
+        width: "15em",
+        fon: "#fff",
+        iconColor: "#4e5ca9c9",
+        background: "rgba(0,0,0,1)",
+      });
       return edited;
     } catch (error) {
+      console.log(error)
       swal("Data mistakes!", "Check mobs data", "error");
       throw new Error(error);
     }

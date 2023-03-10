@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import "./Form.css";
-
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import {Button, Modal, Form } from 'react-bootstrap'
+// import Form from "react-bootstrap/Form";
+// import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createMob, editMob, getMobInfo } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 
-export default function FormMob({ editing }) {
+export default function FormMob({ editing, showModal,  handleShowModal, handleCloseModal}) {
   // const [lifeValue, setLifeValue] = useState(0);
 
   const dispatch = useDispatch();
@@ -19,7 +19,6 @@ export default function FormMob({ editing }) {
   const [mobData, setMobData] = useState({
     name: "",
     type: "",
-    life: "",
     team: "",
     color: "",
   });
@@ -43,12 +42,15 @@ export default function FormMob({ editing }) {
   };
   return (
     <div className="form-container">
-      <form className="form-main" onSubmit={(e) => handleSubmit(e)}>
-        <h1 className="slide-in-blurred-left">MOB</h1>
-        <div className="form-data">
-          <div className=' form-side '>
-            <Form.Group
-            className=" slide-in-blurred-left formInput"
+      
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{editing? 'Editar Mob':'Crear Mob'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+          <Form.Group
+            className="  formInput"
             controlId="formBasicEmail"
           >
             <Form.Label>Name</Form.Label>
@@ -60,7 +62,7 @@ export default function FormMob({ editing }) {
               onChange={(e) => handleInputChange(e)}
             />
           </Form.Group>
-          <Form.Group className="slide-in-blurred-left formInput">
+          <Form.Group className="formInput">
             <Form.Label>Life</Form.Label>
             <div>
               <Form.Range
@@ -72,9 +74,7 @@ export default function FormMob({ editing }) {
               <Form.Label className="lifeValue">{mobData.life} hp</Form.Label>
             </div>
           </Form.Group>
-          </div>
-          <div className=' form-side'>
-            <Form.Group className="slide-in-blurred-left formInput">
+          <Form.Group className=" formInput">
             <Form.Label>Team</Form.Label>
             <Form.Select
               className="mb-3 formInput"
@@ -87,7 +87,7 @@ export default function FormMob({ editing }) {
               <option value="ally">ally</option>
             </Form.Select>
           </Form.Group>
-          <Form.Group className=" slide-in-blurred-left formInput">
+          <Form.Group className=" formInput">
             <Form.Label>Type </Form.Label>
 
             <Form.Select
@@ -103,7 +103,7 @@ export default function FormMob({ editing }) {
             </Form.Select>
           </Form.Group>
           <Form.Group
-            className=" slide-in-blurred-left formInput"
+            className="  formInput"
             controlId="formBasicEmail"
           >
             <Form.Label>Color</Form.Label>
@@ -119,16 +119,18 @@ export default function FormMob({ editing }) {
             />
             </div>
           </Form.Group>
-          </div>
-      
-        </div>
-        <Button
-          className="slide-in-blurred-left-btnSubmit btn-submit"
-          type="submit"
-        >
-          {editing ? "Edit Mob" : "Submit"}
-        </Button>
-      </form>
+
+            <Button variant="primary" type="submit">
+              Enviar
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
