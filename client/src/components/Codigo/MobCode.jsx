@@ -11,7 +11,6 @@ import { saveAs } from "file-saver";
 export default function MobCode({ mobs }) {
   const [code, setCode] = useState(``);
   const prueba = useRef();
-
   const allyArr = mobs.filter((m) => m.team !== "boss");
   const bossArr = mobs.filter((m) => m.team !== "ally");
   const mobsOrder = bossArr.concat(allyArr);
@@ -80,17 +79,19 @@ export default function MobCode({ mobs }) {
   const btnClass = code.length === 0 ? "btn-disabled " : "code-btns ";
   return (
     <div className="codeMob-main">
-      <button className="code-btns " onClick={copyToClipboard}>
-        Save code
-      </button>
-      <button
-        className={btnClass}
-        disabled={code.length === 0}
-        onClick={downloadFile}
-      >
-        Download file
-      </button>
-
+      <div className="btns-container-code">
+          <button className="code-btns " onClick={copyToClipboard}>
+            Save code
+          </button>
+          <button
+            className={btnClass}
+            disabled={code.length === 0}
+            onClick={downloadFile}
+          >
+            Download file
+          </button>
+      </div>
+      <div className="code-container">
       <SyntaxHighlighter
         className="code-style"
         language="javascript"
@@ -156,7 +157,7 @@ dir give{
 
   function eggs{
           
-   ${bossArr
+ ${bossArr
      .map(
        (e, i) =>
          `\t\t kipper_egg zombie ${nameTag(e.name)} ${e.team} ${numberIndex(
@@ -411,19 +412,212 @@ function tick{
    )
    .join("")}
        
-// La funcion de arriba hay que revisarla y ver que esté bien "gramaticalmente".           
+        // La funcion de arriba hay que revisarla y ver que esté bien "gramaticalmente".           
         #Allies
 
+        // LA FUNCION ESTA DE ACA ABAJO SE EJECUTA ASI COMO ESTÁ O DEPENDE DE LOS MOBS?
+
+        execute if entity @s[tag=kip.mob] anchored eyes run {
+          name one_seek
+          execute as @e[type=#kip:mobs,tag=!kip.mob.ally,distance=..20] run {
+              LOOP(20,i){
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @s[type=#kip:hostile_mobs,tag=!kip.mob.ally,distance=..3] add kip.target 
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @s[tag=kip.mob.boss,distance=..3] add kip.target 
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> unless block ~ ~ ~ #kip:nonsolid run tag @s add kip.blocked
+              }
+              tag @s remove kip.blocked
+          }
+        }
       } // #REF 2 END
 
+      #
+      #
+      # ESPECIAL ATTACK
+      #
+      #
+      #This section is for all of the mobs' special attacks. Most will only have one, or two, with any further abilities being passive, if any.
+      #Remember that mobs with renaged attacks should keep a good distance from their target so the projectiles can be seen. Use the move_towards_entity
+      #to aid in follow behavior. You can define a distance in the target selector for the macro to make a mob only move towards it until it gets to a certain range.
 
-    }  // REF #1 END
 
-} // end function tick
+      #
+      #
+      # BOSS
+      #
+      #Boss mob special attacks work a bit differently than ally mobs, since it has 4 that need to be able to be manually triggered.
+      #If the next attack hasn't already been selected with the boss_attack trigger, then it'll randomly select an attack. Note that you may need to apply some
+      #extra logic in the event the randomly chosen attack can't be used for whatever reason, such as if it's a melee attack but there's no target in range.
+      #Boss mob. If mobs_attack enabled, performs special attacks against target(s)
+      execute if entity @s[tag=kip.mob.boss] run { //ref3
+        name boss_behavior
+
+        #Boss attack control
+        execute if entity @s[tag=kip.can_attack] if entity @e[tag=kip.target,tag=!kip.mob.boss] run {
+            name boss_hostile_behavior
+            scoreboard players add @s kip.attack.timer 0
+            scoreboard players add @s kip.attack.timer 1
+
+      ${bossArr.map((e,i)=>`
+      # BOSS ${numberIndex(i+1)}      
+      # ${e.name}      
+      execute if entity @s[tag=kip.mob.boss_${numberIndex(i+1)}] run {
+        name boss_${numberIndex(i+1)}_behavior
+        #Select attack
+          execute if score @s kip.attack.timer matches 100.. run {
+          name boss_${numberIndex(i+1)}_select_attack
+
+          #Selects an attack at random unless an attack was manually selected
+          scoreboard players add @s kip.random 0
+          execute if score @s kip.random matches 0 run random store score @s kip.random 1 4
+
+          #Boss attack 1. May need additional conditions for ranged, etc.
+          execute if score @s kip.random matches 1 run {
+              name boss_${numberIndex(i+1)}_attack_1
+              say Boss 1
+          }
+
+          #Boss attack 2
+          execute if score @s kip.random matches 2 run {
+              name boss_${numberIndex(i+1)}_attack_2
+              say Boss 2
+          }
+
+          #Boss attack 3
+          execute if score @s kip.random matches 3 run {
+              name boss_${numberIndex(i+1)}_attack_3
+              say Boss 3
+          }
+
+          #Boss attack 4
+          execute if score @s kip.random matches 4 run {
+              name boss_${numberIndex(i+1)}_attack_4
+              say Boss 4
+          }
+                              
+          scoreboard players reset @s kip.random
+          scoreboard players reset @s kip.attack.timer
+        }`).join('')}      
+        S}
+      }  //ref3    
+      
+      #
+      #
+      #ALLIES
+      #You'll need to make a new section for each remodeled ally mob here.
+      #You can define a different follow range and speed, as well as an attack(s) based on target range.
+      #Ally mobs only. If mobs_attack enabled, performs special attacks against target(s)
+      
+      execute if entity @s[tag=kip.can_attack,tag=kip.mob.ally] if entity @e[tag=kip.target,tag=!kip.mob.ally] run {
+        name mob_ally_shared_hostility
+        scoreboard players add @s kip.attack.timer 0
+        scoreboard players add @s kip.attack.timer 1
+        sb @s kip.time_since_close_atk ++
+        sb @s kip.time_since_ranged_atk ++
+    }
+    ${allyArr.map((e,i)=>`
+    #
+    # ${numberIndex(i+1)}
+    #
+    #
+    #${e.name}
+    execute if entity @s[tag=kip.mob.${numberIndex(i+1)}] run {
+    name ${numberIndex(i+1)}_behavior
+
+    ${numberIndex(i+1)== 1 ? 'asda':''}
+
+    #Attacks
+    execute if score @s kip.attack.timer matches 100.. run {
+        name ${numberIndex(i+1)}_hostile_behavior
+
+        #Close attack
+        execute if entity @e[type=!#kip:ignore_player,tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=..4] run {
+            name ${numberIndex(i+1)}_attack_close
+            reset_close_timer
+            say Close Attack
+            }
+
+        #Ranged attack
+        execute if entity @e[type=!#kip:ignore_player,tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=5..] run {
+            name ${numberIndex(i+1)}_attack_far
+            reset_ranged_timer
+            say Ranged Attack
+            }
+
+        scoreboard players reset @s kip.attack.timer
+        }
+    }`).join('')}    
+
+   }  // REF #1 END
+
+  } // end function tick
  
+# ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄    ▄          ▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄ 
+#▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌  ▐░▌       ▄█░░░░▌    ▐░░░░░░░░░░░▌
+# ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌ ▐░▌       ▐░░▌▐░░▌    ▐░█▀▀▀▀▀▀▀▀▀ 
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌▐░▌         ▀▀ ▐░░▌    ▐░▌          
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌░▌             ▐░░▌    ▐░█▄▄▄▄▄▄▄▄▄ 
+#     ▐░▌          ▐░▌     ▐░▌          ▐░░▌              ▐░░▌    ▐░░░░░░░░░░░▌
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌░▌             ▐░░▌     ▀▀▀▀▀▀▀▀▀█░▌
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌▐░▌            ▐░░▌              ▐░▌
+#     ▐░▌      ▄▄▄▄█░█▄▄▄▄ ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌ ▐░▌       ▄▄▄▄█░░█▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌
+#     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌  ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
+#      ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀    ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ 
+function tick_1s{
+  execute as @a at @s run {
+      name tick_1s_player
+
+      #Puts the player on the right team and considers them an ally, so the remodeled mobs don't attack them in survival.
+      tag @s add kip.mob.ally
+      team join kip.mobs
+  }
+
+  execute as @e[type=!player] at @s run {
+      name tick_1s_entities
+
+      #This is just here to make this a function at compile time.
+      execute if entity @s
+      execute if entity @s
+  }
+
+  #Reschedule function
+  schedule function kip:tick_1s 1s
+}
+
+# ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄ 
+#▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░▌     ▐░░▌▐░░░░░░░░░░░▌
+# ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌░▌   ▐░▐░▌▐░█▀▀▀▀▀▀▀▀▀ s
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌▐░▌ ▐░▌▐░▌▐░▌          
+#     ▐░▌          ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌ ▐░▐░▌ ▐░▌▐░█▄▄▄▄▄▄▄▄▄ 
+#     ▐░▌          ▐░▌     ▐░░░░░░░░░░░▌▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌
+#     ▐░▌          ▐░▌     ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌   ▀   ▐░▌ ▀▀▀▀▀▀▀▀▀█░▌
+#     ▐░▌          ▐░▌     ▐░▌          ▐░▌       ▐░▌          ▐░▌
+# ▄▄▄▄█░█▄▄▄▄      ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌ ▄▄▄▄▄▄▄▄▄█░▌
+#▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌
+# ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀ 
+dir items{
+  function wstick_use{
+      #Not likely we'll have much need for Warped Fungus on a Stick,
+      #but this is where you can check what Warped Fungus on a Stick item was used and apply the right function if needed
+  }
+  function damaged_mob{
+      #This is an advancement for when the player damages (or kills) a mob. It will mark that damaged mob as a target (if any) for the remodeled mobs.
+      #Useful for instances where they are having trouble seeking a clear target.
+      advancement revoke @s only kip:damaged_mob
+      advancement revoke @s only kip:killed_mob
+      tag @e[type=#kip:mobs,tag=!kip.mob,limit=1,sort=nearest,predicate=!kip:not_hurt] add kip.target
+      execute if predicate kip:items/debug_stick run kill @e[tag=kip.mob,limit=1,sort=nearest,predicate=!kip:not_hurt]
+  }
+}
+
+function force_ready {
+  scoreboard players set @e[tag=kip.mob] kip.tech.timer 290
+  trigger mobs_attack
+}
         
 `}
       </SyntaxHighlighter>
+      </div>
+
     </div>
   );
 }

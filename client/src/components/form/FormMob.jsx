@@ -46,7 +46,8 @@ export default function FormMob({ editing }) {
       <form className="form-main" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="slide-in-blurred-left">MOB</h1>
         <div className="form-data">
-          <Form.Group
+          <div className=' form-side '>
+            <Form.Group
             className=" slide-in-blurred-left formInput"
             controlId="formBasicEmail"
           >
@@ -59,8 +60,21 @@ export default function FormMob({ editing }) {
               onChange={(e) => handleInputChange(e)}
             />
           </Form.Group>
-
           <Form.Group className="slide-in-blurred-left formInput">
+            <Form.Label>Life</Form.Label>
+            <div>
+              <Form.Range
+                name="life"
+                max={1000}
+                onChange={(e) => handleInputChange(e)}
+                defaultValue={0}
+              />
+              <Form.Label className="lifeValue">{mobData.life} hp</Form.Label>
+            </div>
+          </Form.Group>
+          </div>
+          <div className=' form-side'>
+            <Form.Group className="slide-in-blurred-left formInput">
             <Form.Label>Team</Form.Label>
             <Form.Select
               className="mb-3 formInput"
@@ -73,7 +87,6 @@ export default function FormMob({ editing }) {
               <option value="ally">ally</option>
             </Form.Select>
           </Form.Group>
-
           <Form.Group className=" slide-in-blurred-left formInput">
             <Form.Label>Type </Form.Label>
 
@@ -89,25 +102,14 @@ export default function FormMob({ editing }) {
               <option value="creeper">Creeper</option>
             </Form.Select>
           </Form.Group>
-
-          <Form.Group className="slide-in-blurred-left formInput">
-            <Form.Label>Life</Form.Label>
-            <div>
-              <Form.Range
-                name="life"
-                max={1000}
-                onChange={(e) => handleInputChange(e)}
-                defaultValue={0}
-              />
-              <Form.Label className="lifeValue">{mobData.life} hp</Form.Label>
-            </div>
-          </Form.Group>
-
           <Form.Group
             className=" slide-in-blurred-left formInput"
             controlId="formBasicEmail"
           >
             <Form.Label>Color</Form.Label>
+            <div style={{display:'flex', alignItems:'center'}}>
+
+            <Form.Label> {mobData.color}</Form.Label>
             <input
               className="input-color"
               id="colorPicker"
@@ -115,7 +117,10 @@ export default function FormMob({ editing }) {
               name="color"
               onChange={(e) => handleInputChange(e)}
             />
+            </div>
           </Form.Group>
+          </div>
+      
         </div>
         <Button
           className="slide-in-blurred-left-btnSubmit btn-submit"

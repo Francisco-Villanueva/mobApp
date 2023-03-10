@@ -9,6 +9,7 @@
     rgba(54, 70, 128, 1) 67%,
     rgba(0, 212, 255, 1) 100%
   );
+  background-size: cover;
   font-family: "Montserrat";
   -webkit-animation: bg-pan-top 8s infinite both;
   animation: bg-pan-top 8s infinite both;
