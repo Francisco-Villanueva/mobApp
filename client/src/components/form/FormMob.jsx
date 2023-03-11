@@ -8,17 +8,17 @@ import { useDispatch } from "react-redux";
 import { createMob, editMob, getMobInfo } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 
-export default function FormMob({ editing, showModal,  handleShowModal, handleCloseModal}) {
+export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
   // const [lifeValue, setLifeValue] = useState(0);
 
   const dispatch = useDispatch();
-  const { id } = useParams();
 
   // let mobInfo = dispatch(getMobInfo(id));
 
   const [mobData, setMobData] = useState({
     name: "",
     type: "",
+    life: "",
     team: "",
     color: "",
   });
@@ -40,6 +40,7 @@ export default function FormMob({ editing, showModal,  handleShowModal, handleCl
     // console.log('Submiteamos. La data cargada es:   ', mobData)
     // alert('Mob creado')
   };
+
   return (
     <div className="form-container">
       

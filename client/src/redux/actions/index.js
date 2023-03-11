@@ -81,6 +81,7 @@ export function editMob(id, payload) {
         `http://localhost:4000/editMob/${id}`,
         payload
       );
+      console.log('ENTRAMOS AL EDITMOB(), ',  edited)
       Swal.fire({
         position: "bottom-end",
         icon: "success",

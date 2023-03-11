@@ -19,9 +19,11 @@ import FormMob from "../form/FormMob";
 export default function MobList({ mobs }) {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false)
+  const [idM, setIdm] = useState('')
 
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModalEdit = () =>{
+  const handleShowModalEdit = (idMob) =>{
+    setIdm(idMob)
     setShowModal(true);
     setEditing(true)
   } 
@@ -74,9 +76,9 @@ export default function MobList({ mobs }) {
         </thead>
         <tbody>
           {mobs.length !== 0 ? (
-            mobsOrder.map((m) => (
+            mobsOrder.map((m,i) => (
               <tr className="table-row" key={m.id}>
-                <td>{1}</td>
+                <td>{i+1}</td>
                 <td>{m.name}</td>
                 <td>{m.team}</td>
                 <td>{m.life}</td>
@@ -89,7 +91,7 @@ export default function MobList({ mobs }) {
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
-                  <button className="btnForm-style"  onClick={handleShowModalEdit}>
+                  <button className="btnForm-style"  onClick={()=>handleShowModalEdit(m.id)}>
 
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
@@ -105,13 +107,13 @@ export default function MobList({ mobs }) {
         </tbody>
       </Table>
       <div>
-       <FormMob editing={editing} showModal={showModal}  handleCloseModal={handleCloseModal}/>
+       <FormMob editing={editing} id={idM} showModal={showModal}  handleCloseModal={handleCloseModal}/>
       </div>
       
 
       <div className="scale-in-ver-bottom code-generator-main">
       <button onClick={handleShowModal}  className="code-generator" >
-           <p>Abrir form</p>
+           <p>Add Mob</p>
           <FontAwesomeIcon icon={faCode} />
       </button>
       </div>
