@@ -21,7 +21,7 @@ const getMobInfo = async (req, res) => {
 
     const info = await Mob.findOne({ where: { id: id } });
 
-    res.status(200).send(info);
+    res.status(200).json(info);
   } catch (error) {
     res.status(400).send(error);
   }

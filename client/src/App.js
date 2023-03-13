@@ -12,7 +12,8 @@ import MobCode from "./components/Codigo/MobCode";
 function App() {
   const dispatch = useDispatch();
   const mobsLista = useSelector((s) => s.allMobs);
-
+  const mobToEdit = useSelector(s=>s.mobToEdit)
+  const getMobFunc = dispatch(getMobInfo)
   useEffect(() => {
     dispatch(getMobs());
   }, [mobsLista]);
@@ -25,9 +26,8 @@ function App() {
       <div className="app-body">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/form" element={<FormMob editing={false} />} />
-          <Route path="/mobList" element={<Moblist mobs={mobsLista} />} />
-          <Route path="/mobcode" element={<MobCode mobs={mobsLista} />} />
+          <Route path="/mobList" element={<Moblist mobs={mobsLista} mobToEdit={mobToEdit} mobFunc = {getMobFunc}/>} />
+          <Route path="/mobcode" element={<MobCode mobs={mobsLista}  />} />
           <Route path="/ediMob/:id" element={<FormMob editing={true} />} />
         </Routes>
       </div>

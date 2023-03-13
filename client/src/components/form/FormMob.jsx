@@ -8,19 +8,19 @@ import { useDispatch } from "react-redux";
 import { createMob, editMob, getMobInfo } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 
-export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
+export default function FormMob({ mobToEdit, editing, showModal,  id, handleCloseModal}) {
   // const [lifeValue, setLifeValue] = useState(0);
-
+console.log('LA DATA:  ',mobToEdit)
   const dispatch = useDispatch();
 
   // let mobInfo = dispatch(getMobInfo(id));
 
   const [mobData, setMobData] = useState({
-    name: "",
-    type: "",
+    name: editing ? mobToEdit.name:"",
+    type: editing ? mobToEdit.mobtype:"",
     life: "",
-    team: "",
-    color: "",
+    team: editing ? mobToEdit.team:"",
+    color: editing ? mobToEdit.color:"",
   });
 
   const handleInputChange = (e) => {
@@ -60,6 +60,8 @@ export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
               name="name"
               type="text"
               placeholder="Enter name"
+              defaultValue={editing ? mobToEdit.name : ''}
+              contentEditable={true}
               onChange={(e) => handleInputChange(e)}
             />
           </Form.Group>
@@ -81,6 +83,8 @@ export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
               className="mb-3 formInput"
               aria-label="Default select example"
               name={"team"}
+              defaultValue={editing ? mobToEdit.team : ''}
+              contentEditable={true}
               onChange={(e) => handleInputChange(e)}
             >
               <option>Select mob's team</option>
@@ -95,6 +99,8 @@ export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
               className="mb-3  formInput"
               aria-label="Default select example"
               name={"type"}
+              defaultValue={editing ? mobToEdit.mobtype : ''}
+              contentEditable={true}
               onChange={(e) => handleInputChange(e)}
             >
               <option>Select mob's type</option>
@@ -115,6 +121,8 @@ export default function FormMob({ editing, showModal,  id, handleCloseModal}) {
               className="input-color"
               id="colorPicker"
               type="color"
+              defaultValue={editing ? mobToEdit.color : ''}
+              contentEditable={true}
               name="color"
               onChange={(e) => handleInputChange(e)}
             />

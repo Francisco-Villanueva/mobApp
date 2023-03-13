@@ -6,6 +6,7 @@
   background: none;
   border: unset;
   color: #000;
+  text-transform: capitalize;
   transition: color 0.5s;
 }
 
@@ -53,6 +54,11 @@
 }
 .table-row:nth-child(even) {
   background-color: #4e5ba9;
+}
+
+.table-row td{
+  text-transform: capitalize;
+  text-align: start
 }
 
 /* ----------------------------------------------

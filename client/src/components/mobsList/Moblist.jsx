@@ -11,19 +11,24 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { deleteMob, editMob } from "../../redux/actions";
+import { deleteMob, editMob, getMobInfo } from "../../redux/actions";
 
 import Swal from "sweetalert2";
 import FormMob from "../form/FormMob";
 
 export default function MobList({ mobs }) {
+  // console.log('HOLA PA',mobFunc)
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false)
   const [idM, setIdm] = useState('')
+  const [mobToEdit, setMobToEdit] = useState('')
 
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModalEdit = (idMob) =>{
-    setIdm(idMob)
+ 
+  const handleShowModalEdit =  (mob) =>{
+    setIdm(mob.id)
+    setMobToEdit(mob)
     setShowModal(true);
     setEditing(true)
   } 
@@ -32,7 +37,7 @@ export default function MobList({ mobs }) {
     setEditing(false)
   };
 
-  const dispatch = useDispatch();
+  
   const allyArr = mobs.filter((m) => m.team !== "boss");
   const bossArr = mobs.filter((m) => m.team !== "ally");
 
@@ -82,7 +87,7 @@ export default function MobList({ mobs }) {
                 <td>{m.name}</td>
                 <td>{m.team}</td>
                 <td>{m.life}</td>
-                <td>{m.color}</td>
+                <td><input type="color" value={m.color} disabled={true}/> </td>
                 <td>{m.mobtype}</td>
                 <td>
                   <button
@@ -91,7 +96,7 @@ export default function MobList({ mobs }) {
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
-                  <button className="btnForm-style"  onClick={()=>handleShowModalEdit(m.id)}>
+                  <button className="btnForm-style"  onClick={()=>handleShowModalEdit(m)}>
 
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
@@ -107,7 +112,7 @@ export default function MobList({ mobs }) {
         </tbody>
       </Table>
       <div>
-       <FormMob editing={editing} id={idM} showModal={showModal}  handleCloseModal={handleCloseModal}/>
+       <FormMob editing={editing} mobToEdit={mobToEdit} id={idM} showModal={showModal}  handleCloseModal={handleCloseModal}/>
       </div>
       
 
