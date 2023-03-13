@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./MobList.css";
 
 import Table from "react-bootstrap/Table";
-import {Button, Modal, Form } from 'react-bootstrap'
+import { Button, Modal, Form } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,24 +20,23 @@ export default function MobList({ mobs }) {
   // console.log('HOLA PA',mobFunc)
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [editing, setEditing] = useState(false)
-  const [idM, setIdm] = useState('')
-  const [mobToEdit, setMobToEdit] = useState('')
+  const [editing, setEditing] = useState(false);
+  const [idM, setIdm] = useState("");
+  const [mobToEdit, setMobToEdit] = useState("");
 
   const handleCloseModal = () => setShowModal(false);
- 
-  const handleShowModalEdit =  (mob) =>{
-    setIdm(mob.id)
-    setMobToEdit(mob)
+
+  const handleShowModalEdit = (mob) => {
+    setIdm(mob.id);
+    setMobToEdit(mob);
     setShowModal(true);
-    setEditing(true)
-  } 
+    setEditing(true);
+  };
   const handleShowModal = () => {
-    setShowModal(true)
-    setEditing(false)
+    setShowModal(true);
+    setEditing(false);
   };
 
-  
   const allyArr = mobs.filter((m) => m.team !== "boss");
   const bossArr = mobs.filter((m) => m.team !== "ally");
 
@@ -81,13 +80,19 @@ export default function MobList({ mobs }) {
         </thead>
         <tbody>
           {mobs.length !== 0 ? (
-            mobsOrder.map((m,i) => (
-              <tr className="table-row" key={m.id}>
-                <td>{i+1}</td>
+            mobsOrder.map((m, i) => (
+              <tr
+                // style={{ backgroundColor: `${m.color}` }}
+                className="table-row"
+                key={m.id}
+              >
+                <td>{i + 1}</td>
                 <td>{m.name}</td>
                 <td>{m.team}</td>
                 <td>{m.life}</td>
-                <td><input type="color" value={m.color} disabled={true}/> </td>
+                <td>
+                  <input type="color" value={m.color} disabled={true} />{" "}
+                </td>
                 <td>{m.mobtype}</td>
                 <td>
                   <button
@@ -96,11 +101,12 @@ export default function MobList({ mobs }) {
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
-                  <button className="btnForm-style"  onClick={()=>handleShowModalEdit(m)}>
-
+                  <button
+                    className="btnForm-style"
+                    onClick={() => handleShowModalEdit(m)}
+                  >
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
-                  
                 </td>
               </tr>
             ))
@@ -112,15 +118,20 @@ export default function MobList({ mobs }) {
         </tbody>
       </Table>
       <div>
-       <FormMob editing={editing} mobToEdit={mobToEdit} id={idM} showModal={showModal}  handleCloseModal={handleCloseModal}/>
+        <FormMob
+          editing={editing}
+          mobToEdit={mobToEdit}
+          id={idM}
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+        />
       </div>
-      
 
       <div className="scale-in-ver-bottom code-generator-main">
-      <button onClick={handleShowModal}  className="code-generator" >
-           <p>Add Mob</p>
+        <button onClick={handleShowModal} className="code-generator">
+          <p>Add Mob</p>
           <FontAwesomeIcon icon={faCode} />
-      </button>
+        </button>
       </div>
       {/* <div className="scale-in-ver-bottom code-generator-main">
         <Link className="code-generator" to={`/form`}>

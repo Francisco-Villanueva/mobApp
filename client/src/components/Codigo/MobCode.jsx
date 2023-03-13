@@ -9,7 +9,7 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { saveAs } from "file-saver";
 export default function MobCode({ mobs }) {
-  console.log('MOBS: ',mobs)
+  console.log("MOBS: ", mobs);
   const [code, setCode] = useState(``);
   const prueba = useRef();
   const allyArr = mobs.filter((m) => m.team !== "boss");
@@ -81,27 +81,27 @@ export default function MobCode({ mobs }) {
   return (
     <div className="codeMob-main">
       <div className="btns-container-code">
-          <button className="code-btns " onClick={copyToClipboard}>
-            Save code
-          </button>
-          <button
-            className={btnClass}
-            disabled={code.length === 0}
-            onClick={downloadFile}
-          >
-            Download file
-          </button>
+        <button className="code-btns " onClick={copyToClipboard}>
+          Save code
+        </button>
+        <button
+          className={btnClass}
+          disabled={code.length === 0}
+          onClick={downloadFile}
+        >
+          Download file
+        </button>
       </div>
       <div className="code-container">
-      <SyntaxHighlighter
-        className="code-style"
-        language="javascript"
-        style={darcula}
-        value={code}
-        ref={prueba}
-        id="codigoId"
-      >
-        {`import ./macros/aoe_projectile.mcm
+        <SyntaxHighlighter
+          className="code-style"
+          language="javascript"
+          style={darcula}
+          value={code}
+          ref={prueba}
+          id="codigoId"
+        >
+          {`import ./macros/aoe_projectile.mcm
 import ./macros/spawn_aoe_projectile.mcm
 import ./macros/deal_damage.mcm
 import ./macros/explode.mcm
@@ -158,18 +158,20 @@ dir give{
 
   function eggs{
  ${bossArr
-     .map(
-       (e, i) =>
-         `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${e.team} ${numberIndex(
-           i + 1
-         )}\n `
-     ).join("")}${allyArr
-          .map(
-            (e, i) =>
-              `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${
-                e.team
-              } ${numberIndex(i + 1)}\n `
-          ).join("")}
+   .map(
+     (e, i) =>
+       `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${e.team} ${numberIndex(
+         i + 1
+       )}\n `
+   )
+   .join("")}${allyArr
+            .map(
+              (e, i) =>
+                `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${
+                  e.team
+                } ${numberIndex(i + 1)}\n `
+            )
+            .join("")}
   }
 
   function sword{
@@ -206,17 +208,16 @@ dir spawns{
   #The Macro handles most everything for you so it can look clean and be pretty easy. Here's how it works:
   #kipper_boss [base_mob] [Name] [Color of name] [Health as X.0 (no f)] [Additional NBT (optional)]
 
-    ${bossArr
-            .map(
-              (e, i) =>
-                      `function mob_boss_${numberIndex(i + 1)} { \n` +
-                      `\t\tkipper_boss ${e.mobtype} ${e.name} ${e.color}  1000.0 Silent:0b\n ` +
-                      '\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n'+
-                      '\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n' +
-                  "\t}\n " 
-      
-  )
-  .join("")}
+  ${bossArr
+    .map(
+      (e, i) =>
+        `\tfunction mob_boss_${numberIndex(i + 1)} { \n` +
+        `\t\tkipper_boss ${e.mobtype} ${e.name} ${e.color}  1000.0 Silent:0b\n ` +
+        "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
+        "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
+        "\t}\n "
+    )
+    .join("")}
 
   #    _   _ _ _           
   #   /_\ | | (_) ___  ___ 
@@ -228,14 +229,15 @@ dir spawns{
   #kipper_ally [base_mob] [Name] [Color of name] [which mob number it is, spelled out] [Health as X.0 (no f)] [Additional NBT (optional)]
 
 ${allyArr
-    .map(
-      (e, i) =>
-        `\tfunction ally_${numberIndex(i + 1)} { \n` +
-        `\t\tkipper_ally ${e.mobtype} ${e.name} ${e.color} ${numberIndex(i+1 )
-        } 50.0 Silent:0b\n ` +
-        "\t}\n"
-    )
-    .join("")}
+  .map(
+    (e, i) =>
+      `\tfunction ally_${numberIndex(i + 1)} { \n` +
+      `\t\tkipper_ally ${e.mobtype} ${e.name} ${e.color} ${numberIndex(
+        i + 1
+      )} 50.0 Silent:0b\n ` +
+      "\t}\n"
+  )
+  .join("")}
 
 
 #    ___          _                             
@@ -252,17 +254,17 @@ ${allyArr
 ${bossArr
   .map(
     (e, i) =>
-      `function costume_boss_${numberIndex(i + 1)} {\n` +
-      `kipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
-      "}\n"
+      `\tfunction costume_boss_${numberIndex(i + 1)} {\n` +
+      `\t\tkipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
+      "\t}\n"
   )
   .join("")}
 ${allyArr
   .map(
     (e, i) =>
-      `function costume_${numberIndex(i + 1)} {\n` +
-      `kipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color}  Silent:0b\n ` +
-      "}\n"
+      `\tfunction costume_${numberIndex(i + 1)} {\n` +
+      `\t\tkipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color}  Silent:0b\n ` +
+      "\t}\n"
   )
   .join("")}
 
@@ -340,22 +342,22 @@ function tick{
        
     execute if entity @s[tag=kip.summon] run {
     name spawn_eggs_shared
-    ${bossArr
-      .map(
-        (e, i) =>
-          `\texecute if entity @s[tag=kip.summon.boss_${numberIndex(
-            i + 1
-          )}] run function kip:spawns/mob_boss_${numberIndex(i + 1)} \n`
-      )
-      .join("")}${allyArr
-          .map(
-            (e, i) =>
-              `\texecute if entity @s[tag=kip.summon.${numberIndex(
-                i + 1
-              )}] run function kip:spawns/ally_${numberIndex(i + 1)} \n`
-          )
-          .join("")}
-          kill @s
+${bossArr
+  .map(
+    (e, i) =>
+      `\t\texecute if entity @s[tag=kip.summon.boss_${numberIndex(
+        i + 1
+      )}] run function kip:spawns/mob_boss_${numberIndex(i + 1)} \n`
+  )
+  .join("")}${allyArr
+            .map(
+              (e, i) =>
+                `\t\ttexecute if entity @s[tag=kip.summon.${numberIndex(
+                  i + 1
+                )}] run function kip:spawns/ally_${numberIndex(i + 1)} \n`
+            )
+            .join("")}
+        kill @s
     }
 
     #costume behavior macro. Do not remove!
@@ -369,7 +371,7 @@ function tick{
     #Custom Mobs Behavior
     #This is where the behavior for all of the remodeled mobs is covered and broken down by subsection.
  
-    execute if entity @s[tag=kip.mob] run { // REF #1 START
+    execute if entity @s[tag=kip.mob] run { 
       name mob_shared_behavior
 
       #Macro for mob control trigger settings. Do not remove!
@@ -387,7 +389,7 @@ function tick{
       #Generally, you probably don't need to change this section.
       #If mobs_attack enabled, searches for target
 
-      execute if entity @s[tag=kip.can_attack] run { // #REF 2
+      execute if entity @s[tag=kip.can_attack] run { 
         name mob_target_seek
 
         #Boss
@@ -452,14 +454,16 @@ function tick{
             scoreboard players add @s kip.attack.timer 0
             scoreboard players add @s kip.attack.timer 1
 
-      ${bossArr.map((e,i)=>`
-      # BOSS ${numberIndex(i+1)}      
+      ${bossArr
+        .map(
+          (e, i) => `
+      # BOSS ${numberIndex(i + 1)}      
       # ${e.name}      
-      execute if entity @s[tag=kip.mob.boss_${numberIndex(i+1)}] run {
-        name boss_${numberIndex(i+1)}_behavior
+      execute if entity @s[tag=kip.mob.boss_${numberIndex(i + 1)}] run {
+        name boss_${numberIndex(i + 1)}_behavior
         #Select attack
           execute if score @s kip.attack.timer matches 100.. run {
-          name boss_${numberIndex(i+1)}_select_attack
+          name boss_${numberIndex(i + 1)}_select_attack
 
           #Selects an attack at random unless an attack was manually selected
           scoreboard players add @s kip.random 0
@@ -467,31 +471,33 @@ function tick{
 
           #Boss attack 1. May need additional conditions for ranged, etc.
           execute if score @s kip.random matches 1 run {
-              name boss_${numberIndex(i+1)}_attack_1
+              name boss_${numberIndex(i + 1)}_attack_1
               say Boss 1
           }
 
           #Boss attack 2
           execute if score @s kip.random matches 2 run {
-              name boss_${numberIndex(i+1)}_attack_2
+              name boss_${numberIndex(i + 1)}_attack_2
               say Boss 2
           }
 
           #Boss attack 3
           execute if score @s kip.random matches 3 run {
-              name boss_${numberIndex(i+1)}_attack_3
+              name boss_${numberIndex(i + 1)}_attack_3
               say Boss 3
           }
 
           #Boss attack 4
           execute if score @s kip.random matches 4 run {
-              name boss_${numberIndex(i+1)}_attack_4
+              name boss_${numberIndex(i + 1)}_attack_4
               say Boss 4
           }
                               
           scoreboard players reset @s kip.random
           scoreboard players reset @s kip.attack.timer
-        }`).join('')}      
+        }`
+        )
+        .join("")}      
         S}
       }     
       
@@ -509,49 +515,56 @@ function tick{
         sb @s kip.time_since_close_atk ++
         sb @s kip.time_since_ranged_atk ++
     }
-    ${allyArr.map((e,i)=>`
+    ${allyArr
+      .map(
+        (e, i) => `
     #
-    # ${numberIndex(i+1)}
+    # ${numberIndex(i + 1)}
     #
     #
     #${e.name} 
-    execute if entity @s[tag=kip.mob.${numberIndex(i+1)}] run {
-    name ${numberIndex(i+1)}_behavior
+    execute if entity @s[tag=kip.mob.${numberIndex(i + 1)}] run {
+    name ${numberIndex(i + 1)}_behavior
 
-${numberIndex(i+1)== 'one' ? '\t#This is a simple and easy/common macro you can use to make a mob move towards a target and face it.\n' +
-    '\t#For demonstation, only if on the ground. The number at the end is the scaling factor for the follow speed.\n'+
-    '\t#1 is instanenous, and larger numbers are slightly slower. Between 12-20 tends to be a good range.\n'+
-    '\texecute unless predicate kip:in_air run move_towards_entity @e[tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=2..16] 12\n'+
-
-    "\t#Here is another option for you to use for more dynamic mob movement, courtesy of Travis. You can include this in any mob's tick function \n"+
-    '\t#that you want to have follow targets, close in when using a melee or backup when using a ranged, strafe, etc. You can apply the tag "kip.ignore_vms" \n' +
-    "\t#to have the mob temporarily not use that dyanmic movement, such as if you're making it dig underground or jump.\n" +
-    '\t#NOTE: If you want the mob to use the flight distance, you need to also tag them with kip.flight_mob\n' +
-    '\t#Syntax:\n'+
-    '\t#vms <tag filter> <flight distance from ground, use 0 if not a flight mob> <max distance> <min distance> <forward speed> <back speed> <left speed> <right speed> <occasional forwards duration> <occasional backwards duration> <close attack ensurance time, set to -1 to not use> <ranged attack ensurance time, set to -1 to not use>\n' +
-    '\t# vms tag=!kip.mob.one,tag=kip.target 2 12 3 0.08 0.08 0.06 0.06 1s 16t -1 -1':' HOLA'}
+${
+  numberIndex(i + 1) == "one"
+    ? "\t#This is a simple and easy/common macro you can use to make a mob move towards a target and face it.\n" +
+      "\t#For demonstation, only if on the ground. The number at the end is the scaling factor for the follow speed.\n" +
+      "\t#1 is instanenous, and larger numbers are slightly slower. Between 12-20 tends to be a good range.\n" +
+      "\texecute unless predicate kip:in_air run move_towards_entity @e[tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=2..16] 12\n" +
+      "\t#Here is another option for you to use for more dynamic mob movement, courtesy of Travis. You can include this in any mob's tick function \n" +
+      '\t#that you want to have follow targets, close in when using a melee or backup when using a ranged, strafe, etc. You can apply the tag "kip.ignore_vms" \n' +
+      "\t#to have the mob temporarily not use that dyanmic movement, such as if you're making it dig underground or jump.\n" +
+      "\t#NOTE: If you want the mob to use the flight distance, you need to also tag them with kip.flight_mob\n" +
+      "\t#Syntax:\n" +
+      "\t#vms <tag filter> <flight distance from ground, use 0 if not a flight mob> <max distance> <min distance> <forward speed> <back speed> <left speed> <right speed> <occasional forwards duration> <occasional backwards duration> <close attack ensurance time, set to -1 to not use> <ranged attack ensurance time, set to -1 to not use>\n" +
+      "\t# vms tag=!kip.mob.one,tag=kip.target 2 12 3 0.08 0.08 0.06 0.06 1s 16t -1 -1"
+    : " HOLA"
+}
 
     #Attacks
     execute if score @s kip.attack.timer matches 100.. run {
-        name ${numberIndex(i+1)}_hostile_behavior
+        name ${numberIndex(i + 1)}_hostile_behavior
 
         #Close attack
         execute if entity @e[type=!#kip:ignore_player,tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=..4] run {
-            name ${numberIndex(i+1)}_attack_close
+            name ${numberIndex(i + 1)}_attack_close
             reset_close_timer
             say Close Attack
             }
 
         #Ranged attack
         execute if entity @e[type=!#kip:ignore_player,tag=kip.target,tag=!kip.mob.ally,limit=1,sort=nearest,distance=5..] run {
-            name ${numberIndex(i+1)}_attack_far
+            name ${numberIndex(i + 1)}_attack_far
             reset_ranged_timer
             say Ranged Attack
             }
 
         scoreboard players reset @s kip.attack.timer
         }
-    }`).join('')}    
+    }`
+      )
+      .join("")}    
 
    }  
 
@@ -621,9 +634,8 @@ function force_ready {
 }
         
 `}
-      </SyntaxHighlighter>
+        </SyntaxHighlighter>
       </div>
-
     </div>
   );
 }

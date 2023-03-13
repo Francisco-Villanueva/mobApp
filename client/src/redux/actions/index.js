@@ -5,7 +5,7 @@ export const actionTypes = {
   GET_MOBS: "GET_MOBS",
   CREATE_MOB: "CREATE_MOB",
   DELETE_MOB: "DELETE_MOB",
-  GET_MOB_BY_ID :'GET_MOB_BY_ID'
+  GET_MOB_BY_ID: "GET_MOB_BY_ID",
 };
 
 export function getMobs() {
@@ -22,16 +22,14 @@ export function getMobs() {
 }
 export function getMobInfo(id) {
   return async function (dispatch) {
-  
     const json = await axios.get(`http://localhost:4000/mobs/${id}`);
 
     console.log("entramos al getMobInfo(), retorna:  ", json.data);
 
     return dispatch({
       type: actionTypes.GET_MOB_BY_ID,
-      payload: json.data
+      payload: json.data,
     });
-
   };
 }
 
@@ -60,7 +58,14 @@ export function createMob(payload) {
         payload: newMob.data,
       });
     } catch (error) {
-      swal("Data mistakes!", error, "error");
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error!",
+        iconColor: "#4e5ca9c9",
+        text: "Missing data ",
+      });
+
       console.log(error);
       throw new Error(error);
     }
@@ -87,7 +92,7 @@ export function editMob(id, payload) {
         `http://localhost:4000/editMob/${id}`,
         payload
       );
-      console.log('ENTRAMOS AL EDITMOB(), ',  edited)
+      console.log("ENTRAMOS AL EDITMOB(), ", edited);
       Swal.fire({
         position: "bottom-end",
         icon: "success",
@@ -102,7 +107,7 @@ export function editMob(id, payload) {
       });
       return edited;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       swal("Data mistakes!", "Check mobs data", "error");
       throw new Error(error);
     }
