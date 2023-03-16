@@ -9,6 +9,9 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { saveAs } from "file-saver";
 export default function MobCode({ mobs }) {
+  // crear una function que detecte si el tipo del mob es de los "verdes" (ver lista pdf en wp). En caso de ser así, tienen que tener 2 valores en el type.
+  // si es un verder, en la function egg va el valor de la tabla de eggs, en el resto el del output type
+
   console.log("MOBS: ", mobs);
   const [code, setCode] = useState(``);
   const prueba = useRef();
@@ -212,7 +215,7 @@ dir spawns{
     .map(
       (e, i) =>
         `\tfunction mob_boss_${numberIndex(i + 1)} { \n` +
-        `\t\tkipper_boss ${e.mobtype} ${e.name} ${e.color}  1000.0 Silent:0b\n ` +
+        `\t\tkipper_boss ${e.mobtype} ${e.name} ${e.color} 1000.0 Silent:0b\n ` +
         "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
         "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
         "\t}\n "
@@ -255,7 +258,7 @@ ${bossArr
   .map(
     (e, i) =>
       `\tfunction costume_boss_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -263,7 +266,7 @@ ${allyArr
   .map(
     (e, i) =>
       `\tfunction costume_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.team} ${e.mobtype} ${e.name} ${e.color}  Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -393,26 +396,18 @@ ${bossArr
         name mob_target_seek
 
         #Boss
- ${bossArr
-   .map(
-     (e, i) =>
-       `\t\texecute if entity @s[tag=kip.mob.boss_${numberIndex(
-         i + 1
-       )}] anchored eyes run {
-                  name boss_seek
-                  execute as @e[tag=kip.mob.ally,distance=..20] run {
-                      name boss_line_of_sight
-                      LOOP(20,i){
-                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @s[type=#kip:mobs,tag=!kip.mob.boss,distance=..3] add kip.target 
-                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @e[type=player,distance=..3] add kip.target 
-                          execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> unless block ~ ~ ~ #kip:nonsolid run tag @s add kip.blocked
-                      }
-                      tag @s remove kip.blocked
-                  }
-              } \n`
-   )
-   .join("")}
-       
+        execute if entity @s[tag=kip.mob.boss] anchored eyes run {
+          name boss_seek
+          execute as @e[tag=kip.mob.ally,distance=..20] run {
+              name boss_line_of_sight
+              LOOP(20,i){
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @s[type=#kip:mobs,tag=!kip.mob.boss,distance=..3] add kip.target 
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> run tag @e[type=player,gamemode=survival,distance=..3] add kip.target 
+                  execute unless entity @s[tag=kip.blocked] facing entity @s feet positioned ^ ^ ^<%i%> unless block ~ ~ ~ #kip:nonsolid run tag @s add kip.blocked
+              }
+              tag @s remove kip.blocked
+          }
+      }
        
         execute if entity @s[tag=kip.mob] anchored eyes run {
           name one_seek
@@ -445,7 +440,7 @@ ${bossArr
       #If the next attack hasn't already been selected with the boss_attack trigger, then it'll randomly select an attack. Note that you may need to apply some
       #extra logic in the event the randomly chosen attack can't be used for whatever reason, such as if it's a melee attack but there's no target in range.
       #Boss mob. If mobs_attack enabled, performs special attacks against target(s)
-      execute if entity @s[tag=kip.mob.boss] run { //ref3
+      execute if entity @s[tag=kip.mob.boss] run { 
         name boss_behavior
 
         #Boss attack control
@@ -495,10 +490,10 @@ ${bossArr
                               
           scoreboard players reset @s kip.random
           scoreboard players reset @s kip.attack.timer
-        }`
+        }\n`
         )
         .join("")}      
-        S}
+        }
       }     
       
       #
@@ -539,7 +534,7 @@ ${
       "\t#Syntax:\n" +
       "\t#vms <tag filter> <flight distance from ground, use 0 if not a flight mob> <max distance> <min distance> <forward speed> <back speed> <left speed> <right speed> <occasional forwards duration> <occasional backwards duration> <close attack ensurance time, set to -1 to not use> <ranged attack ensurance time, set to -1 to not use>\n" +
       "\t# vms tag=!kip.mob.one,tag=kip.target 2 12 3 0.08 0.08 0.06 0.06 1s 16t -1 -1"
-    : " HOLA"
+    : ""
 }
 
     #Attacks

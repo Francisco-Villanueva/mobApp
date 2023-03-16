@@ -80,13 +80,51 @@ export default function MobList({ mobs }) {
         </thead>
         <tbody>
           {mobs.length !== 0 ? (
-            mobsOrder.map((m, i) => (
+            bossArr.map((m, i) => (
               <tr
                 // style={{ backgroundColor: `${m.color}` }}
                 className="table-row"
                 key={m.id}
               >
-                <td>{i + 1}</td>
+                <td>B {i + 1}</td>
+                <td>{m.name}</td>
+                <td>{m.team}</td>
+                <td>{m.life}</td>
+                <td>
+                  <input type="color" value={m.color} disabled={true} />{" "}
+                </td>
+                <td>{m.mobtype}</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(m.id)}
+                    className="btnForm-style"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                  <button
+                    className="btnForm-style"
+                    onClick={() => handleShowModalEdit(m)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <div className="noMobs">
+              <b> NO MOBS !</b>
+            </div>
+          )}
+        </tbody>
+        <tbody>
+          {mobs.length !== 0 ? (
+            allyArr.map((m, i) => (
+              <tr
+                // style={{ backgroundColor: `${m.color}` }}
+                className="table-row"
+                key={m.id}
+              >
+                <td>A {i + 1}</td>
                 <td>{m.name}</td>
                 <td>{m.team}</td>
                 <td>{m.life}</td>
