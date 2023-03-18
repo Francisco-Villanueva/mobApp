@@ -1,5 +1,4 @@
-const { Mob } = require("../db");
-const axios = require("axios");
+const { Mob, Model } = require("../db");
 
 const test = (req, res) => {
   res.send("hola");
@@ -8,7 +7,7 @@ const test = (req, res) => {
 const getMobs = async (req, res) => {
   try {
     const json = await Mob.findAll();
-
+    console.log("MODELOO:  ", Mob);
     res.status(200).send(json);
   } catch (error) {
     res.status(400).send(error);
@@ -98,6 +97,60 @@ const editMob = async (req, res) => {
     res.status(400).send(error);
   }
 };
+const getModels = async (req, res) => {
+  try {
+    const json = await Model.findAll();
+    console.log("CANTIDAD: ", json);
+
+    let arr = json.map((m) => m.modelname);
+    res.status(200).send(json);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+};
+
+const newModel = async (req, res) => {
+  try {
+    const { modeltype, green, modelname } = req.body;
+    if (!modelname || !green || !modeltype) {
+      return res.status(400).send("error en los datos");
+    }
+    function tipo2(name) {
+      switch (name) {
+        case "Ender Dragon":
+          return "enderman";
+
+        case "Illusioner":
+          return "evoker";
+
+        case "Iron Golem":
+          return "panda";
+
+        case "Snow Golem":
+          return "polar_bear";
+
+        case "Giant":
+          return "zombie";
+
+        default:
+          break;
+      }
+    }
+
+    const newModelB = await Model.create({
+      modelname: modelname,
+      modeltype: modeltype,
+      green: green,
+      spawnegg: green ? tipo2(modelname) : "",
+    });
+
+    res.status(200).send(newModelB);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+};
 
 module.exports = {
   test,
@@ -106,4 +159,6 @@ module.exports = {
   getMobs,
   deleteMob,
   getMobInfo,
+  getModels,
+  newModel,
 };
