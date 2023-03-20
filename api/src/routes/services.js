@@ -97,12 +97,27 @@ const editMob = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+const aux = async () => {
+  const json = await Model.findAll();
+  const filtrado = json.filter((e) => e.green !== true);
+  filtrado.map((m) =>
+    Model.update(
+      { spawnegg: m.modeltype },
+      {
+        where: {
+          id: m.id,
+        },
+      }
+    )
+  );
+};
 const getModels = async (req, res) => {
   try {
     const json = await Model.findAll();
-    console.log("CANTIDAD: ", json);
+    // console.log("CANTIDAD: ", json);
+    aux();
 
-    let arr = json.map((m) => m.modelname);
     res.status(200).send(json);
   } catch (error) {
     console.log(error);
