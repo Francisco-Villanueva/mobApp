@@ -1,7 +1,8 @@
 import { actionTypes } from "../actions";
 const initialState = {
   allMobs: [],
-  mobToEdit:[]
+  mobToEdit: [],
+  allModels: [],
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -9,26 +10,30 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allMobs: action.payload,
-      }
+      };
 
-      case actionTypes.GET_MOB_BY_ID:
-        return{
-          mobToEdit: action.payload
-      }
+    case actionTypes.GET_MODELS:
+      return {
+        ...state,
+        allModels: action.payload,
+      };
 
-      case actionTypes.CREATE_MOB:
-        state.allMobs.push(action.payload)
-        return{
-          ...state
-      }
+    case actionTypes.GET_MOB_BY_ID:
+      return {
+        mobToEdit: action.payload,
+      };
 
-      case actionTypes.DELETE_MOB:
-          return {
-            ...state,
-            allMobs: initialState.allMobs.filter(
-              (m) => m.id != action.payload
-            ),
-          };
+    case actionTypes.CREATE_MOB:
+      state.allMobs.push(action.payload);
+      return {
+        ...state,
+      };
+
+    case actionTypes.DELETE_MOB:
+      return {
+        ...state,
+        allMobs: initialState.allMobs.filter((m) => m.id != action.payload),
+      };
     default:
       return state;
   }

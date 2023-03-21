@@ -15,8 +15,8 @@ export default function MobCode({ mobs }) {
   console.log("MOBS: ", mobs);
   const [code, setCode] = useState(``);
   const prueba = useRef();
-  const allyArr = mobs.filter((m) => m.team !== "boss");
-  const bossArr = mobs.filter((m) => m.team !== "ally");
+  const allyArr = mobs.filter((m) => m.team !== "Boss");
+  const bossArr = mobs.filter((m) => m.team !== "Ally");
   const mobsOrder = bossArr.concat(allyArr);
   // console.log("ALLY: ", allyArr);
   const nameTag = (name) => {
@@ -163,14 +163,14 @@ dir give{
  ${bossArr
    .map(
      (e, i) =>
-       `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${e.team} ${numberIndex(
-         i + 1
-       )}\n `
+       `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${
+         e.team
+       } ${numberIndex(i + 1)}\n `
    )
    .join("")}${allyArr
             .map(
               (e, i) =>
-                `\t\t kipper_egg ${e.mobtype} ${nameTag(e.name)} ${
+                `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${
                   e.team
                 } ${numberIndex(i + 1)}\n `
             )
@@ -215,7 +215,7 @@ dir spawns{
     .map(
       (e, i) =>
         `\tfunction mob_boss_${numberIndex(i + 1)} { \n` +
-        `\t\tkipper_boss ${e.mobtype} ${e.name} ${e.color} 1000.0 Silent:0b\n ` +
+        `\t\tkipper_boss ${e.mobtype[1]} ${e.name} ${e.color} 1000.0 Silent:0b\n ` +
         "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
         "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
         "\t}\n "
@@ -235,7 +235,7 @@ ${allyArr
   .map(
     (e, i) =>
       `\tfunction ally_${numberIndex(i + 1)} { \n` +
-      `\t\tkipper_ally ${e.mobtype} ${e.name} ${e.color} ${numberIndex(
+      `\t\tkipper_ally ${e.mobtype[1]} ${e.name} ${e.color} ${numberIndex(
         i + 1
       )} 50.0 Silent:0b\n ` +
       "\t}\n"
@@ -258,7 +258,7 @@ ${bossArr
   .map(
     (e, i) =>
       `\tfunction costume_boss_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype[1]} ${e.name} ${e.color} Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -266,7 +266,7 @@ ${allyArr
   .map(
     (e, i) =>
       `\tfunction costume_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.mobtype} ${e.name} ${e.color} Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype[1]} ${e.name} ${e.color} Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}

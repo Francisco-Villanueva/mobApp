@@ -14,24 +14,32 @@ export default function FormMob({
   showModal,
   id,
   handleCloseModal,
+  models,
 }) {
-  // const [lifeValue, setLifeValue] = useState(0);
-  console.log("MOB TO EDIT:  ", mobToEdit);
   const dispatch = useDispatch();
-
-  // let mobInfo = dispatch(getMobInfo(id));
 
   const [mobData, setMobData] = useState({
     name: "",
-    type: "",
+    type: [],
     team: "",
     color: "",
   });
 
-  console.log("LA DATA:  ", mobData);
   const handleInputChange = (e) => {
-    console.log("data : ", e.target.name, " : ", e.target.value);
-    setMobData({ ...mobData, [e.target.name]: e.target.value });
+    if (e.target.name === "type") {
+      let modelFilt = models.filter((t) => t.modelname == e.target.value);
+      setMobData({
+        ...mobData,
+        [e.target.name]: [
+          e.target.value,
+          modelFilt[0].modeltype,
+          modelFilt[0].spawnegg,
+        ],
+      });
+      // setMobData({ ...mobData, ["spawnegg"]: modelFilt[0].spawnegg });
+    } else {
+      setMobData({ ...mobData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -43,10 +51,10 @@ export default function FormMob({
       dispatch(createMob(mobData));
       setMobData({
         name: "",
-        type: "",
-        life: "",
         team: "",
         color: "",
+        type: "",
+        life: "",
       });
     }
   };
@@ -92,8 +100,8 @@ export default function FormMob({
                 onChange={(e) => handleInputChange(e)}
               >
                 <option>Select mob's team</option>
-                <option value="boss">boss</option>
-                <option value="ally">ally</option>
+                <option value="Boss">Boss</option>
+                <option value="Ally">Ally</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className=" formInput">
@@ -107,9 +115,9 @@ export default function FormMob({
                 onChange={(e) => handleInputChange(e)}
               >
                 <option>Select mob's type</option>
-                <option value="zombie">Zombie</option>
-                <option value="esqueleton">Esqueleton</option>
-                <option value="creeper">Creeper</option>
+                {models.map((m) => (
+                  <option value={m.modelname}>{m.modelname}</option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="  formInput" controlId="formBasicEmail">

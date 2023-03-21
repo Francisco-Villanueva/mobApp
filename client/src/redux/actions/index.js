@@ -6,6 +6,7 @@ export const actionTypes = {
   CREATE_MOB: "CREATE_MOB",
   DELETE_MOB: "DELETE_MOB",
   GET_MOB_BY_ID: "GET_MOB_BY_ID",
+  GET_MODELS: "GET_MODELS",
 };
 
 export function getMobs() {
@@ -16,6 +17,16 @@ export function getMobs() {
 
     return dispatch({
       type: actionTypes.GET_MOBS,
+      payload: json.data,
+    });
+  };
+}
+export function getModels() {
+  return async function (dispatch) {
+    const json = await axios.get("http://localhost:4000/models");
+
+    return dispatch({
+      type: actionTypes.GET_MODELS,
       payload: json.data,
     });
   };

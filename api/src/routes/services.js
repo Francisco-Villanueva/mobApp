@@ -27,8 +27,8 @@ const getMobInfo = async (req, res) => {
 };
 const createMob = async (req, res) => {
   try {
-    const { name, team, life, color, type } = req.body;
-    if (!name || !team || !color || !type) {
+    const { name, team, life, color, type, spawnegg } = req.body;
+    if (!name || !team || !color || !type[0]) {
       return res.status(400).send("error en los datos");
     }
 
@@ -37,7 +37,7 @@ const createMob = async (req, res) => {
       team: team,
       color: color,
       mobtype: type,
-      life: team === "boss" ? 1000 : 50,
+      life: team === "Boss" ? 1000 : 50,
     });
 
     res.status(200).send(newMob);
@@ -116,8 +116,7 @@ const getModels = async (req, res) => {
   try {
     const json = await Model.findAll();
     // console.log("CANTIDAD: ", json);
-    aux();
-
+    // aux();
     res.status(200).send(json);
   } catch (error) {
     console.log(error);

@@ -16,8 +16,7 @@ import { deleteMob, editMob, getMobInfo } from "../../redux/actions";
 import Swal from "sweetalert2";
 import FormMob from "../form/FormMob";
 
-export default function MobList({ mobs }) {
-  // console.log('HOLA PA',mobFunc)
+export default function MobList({ mobs, models }) {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -37,12 +36,11 @@ export default function MobList({ mobs }) {
     setEditing(false);
   };
 
-  const allyArr = mobs.filter((m) => m.team !== "boss");
-  const bossArr = mobs.filter((m) => m.team !== "ally");
+  const allyArr = mobs.filter((m) => m.team !== "Boss");
+  const bossArr = mobs.filter((m) => m.team !== "Ally");
 
   const mobsOrder = bossArr.concat(allyArr);
 
-  console.log("MOBSORDER : ", mobsOrder);
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -93,7 +91,7 @@ export default function MobList({ mobs }) {
                 <td>
                   <input type="color" value={m.color} disabled={true} />{" "}
                 </td>
-                <td>{m.mobtype}</td>
+                <td>{m.mobtype[0]}</td>
                 <td>
                   <button
                     onClick={() => handleDelete(m.id)}
@@ -112,7 +110,7 @@ export default function MobList({ mobs }) {
             ))
           ) : (
             <div className="noMobs">
-              <b> NO MOBS !</b>
+              <b> no boss !</b>
             </div>
           )}
         </tbody>
@@ -131,7 +129,7 @@ export default function MobList({ mobs }) {
                 <td>
                   <input type="color" value={m.color} disabled={true} />{" "}
                 </td>
-                <td>{m.mobtype}</td>
+                <td>{m.mobtype[0]}</td>
                 <td>
                   <button
                     onClick={() => handleDelete(m.id)}
@@ -150,13 +148,14 @@ export default function MobList({ mobs }) {
             ))
           ) : (
             <div className="noMobs">
-              <b> NO MOBS !</b>
+              <b> No allies!</b>
             </div>
           )}
         </tbody>
       </Table>
       <div>
         <FormMob
+          models={models}
           editing={editing}
           mobToEdit={mobToEdit}
           id={idM}

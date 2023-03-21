@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       defaultValue: "Blue",
     },
     mobtype: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
     life: {
       type: DataTypes.INTEGER,
