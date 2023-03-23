@@ -24,7 +24,7 @@ export function getMobs() {
 export function getModels() {
   return async function (dispatch) {
     const json = await axios.get("http://localhost:4000/models");
-
+    // console.log('GET MODELS () : ', json.data)
     return dispatch({
       type: actionTypes.GET_MODELS,
       payload: json.data,
