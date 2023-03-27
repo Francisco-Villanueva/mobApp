@@ -9,6 +9,7 @@ import {
   faTrash,
   faCode,
   faPenToSquare,
+  faCheck
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { deleteMob, editMob, getMobInfo } from "../../redux/actions";
@@ -23,15 +24,21 @@ export default function MobList({ mobs, models }) {
   const [idM, setIdm] = useState("");
   const [mobToEdit, setMobToEdit] = useState("");
 
-  const handleCloseModal = () => setShowModal(false);
-
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setMobToEdit(()=> '')
+    console.log('ENTRO AL CLOSE MODAL!, MOB TO EDIT:  ', mobToEdit)
+  }
+  
   const handleShowModalEdit = (mob) => {
     setIdm(mob.id);
     setMobToEdit(mob);
-    setShowModal(true);
-    setEditing(true);
+    // setShowModal(true);
+    setEditing((s)=>{s=true});
   };
   const handleShowModal = () => {
+    console.log('ENTRO AL SHOW MODAL!, MOB TO EDIT:  ', mobToEdit)
+
     setShowModal(true);
     setEditing(false);
   };
@@ -85,8 +92,8 @@ export default function MobList({ mobs, models }) {
                 key={m.id}
               >
                 <td>B {i + 1}</td>
-                <td>{m.name}</td>
-                <td>{m.team}</td>
+                <td>{editing === false? m.name: <input type='text'/>}</td>
+                <td>{editing === false? m.team: <input type='text'/>}</td>
                 <td>{m.life}</td>
                 <td>
                   <input type="color" value={m.color} disabled={true} />{" "}
@@ -143,6 +150,13 @@ export default function MobList({ mobs, models }) {
                   >
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
+                  <button
+                    className="btnForm-style"
+                    onClick={() => setEditing(s=>{s=false})}
+                  >
+                   XHJ
+                  </button>
+                  
                 </td>
               </tr>
             ))

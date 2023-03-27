@@ -16,6 +16,8 @@ export default function FormMob({
   handleCloseModal,
   models,
 }) {
+
+  // console.log('MOB A EDIAR => ', mobToEdit)
   const dispatch = useDispatch();
 
   const [mobData, setMobData] = useState({
@@ -23,16 +25,20 @@ export default function FormMob({
     type: [],
     team: "",
     color: "",
+    life:"",
   });
 
   const handleInputChange = (e) => {
     if (e.target.name === "type") {
-      let modelFilt = models.filter((t) => t.modelname == e.target.value);
+
+      let modelFilt = models.filter((t) => t.name == e.target.value);
+
+      console.group('HOLA VALORES: ',modelFilt[0].type , ' +  ', modelFilt[0].spawnegg )
       setMobData({
         ...mobData,
         [e.target.name]: [
           e.target.value,
-          modelFilt[0].modeltype,
+          modelFilt[0].type,
           modelFilt[0].spawnegg,
         ],
       });
@@ -61,12 +67,12 @@ export default function FormMob({
 
   return (
     <div className="form-container">
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
+      <Modal show={showModal} onHide={handleCloseModal} className='modal-main'>
+        <Modal.Header closeButton className='modal-head'>
           <Modal.Title>{editing ? "Editar Mob" : "Crear Mob"}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+        <Modal.Body className='modal-body'>
+          <Form onSubmit={handleSubmit} className='form-main'>
             <Form.Group className="  formInput" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -81,13 +87,13 @@ export default function FormMob({
             <Form.Group className="formInput">
               <Form.Label>Life</Form.Label>
               <div>
-                <Form.Range
+                <Form.Control
                   name="life"
-                  max={1000}
+                  type='number'
                   onChange={(e) => handleInputChange(e)}
                   defaultValue={0}
                 />
-                <Form.Label className="lifeValue">{mobData.life} hp</Form.Label>
+                {/* <Form.Label className="lifeValue">{mobData.life} hp</Form.Label> */}
               </div>
             </Form.Group>
             <Form.Group className=" formInput">
@@ -96,7 +102,6 @@ export default function FormMob({
                 className="mb-3 formInput"
                 aria-label="Default select example"
                 name={"team"}
-                defaultValue={editing ? mobToEdit.team : ""}
                 onChange={(e) => handleInputChange(e)}
               >
                 <option>Select mob's team</option>
@@ -111,12 +116,11 @@ export default function FormMob({
                 className="mb-3  formInput"
                 aria-label="Default select example"
                 name={"type"}
-                defaultValue={editing ? mobToEdit.mobtype : ""}
                 onChange={(e) => handleInputChange(e)}
               >
                 <option>Select mob's type</option>
                 {models.map((m) => (
-                  <option value={m.modelname}>{m.modelname}</option>
+                  <option value={m.name}>{m.name}</option>
                 ))}
               </Form.Select>
             </Form.Group>
@@ -142,10 +146,9 @@ export default function FormMob({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cerrar
-          </Button>
+          
         </Modal.Footer>
+        
       </Modal>
     </div>
   );

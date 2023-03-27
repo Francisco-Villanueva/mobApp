@@ -1,5 +1,6 @@
 const { Mob, Model } = require("../db");
-
+// const {dataModel} = require('../modeldata')
+const {dataModel} = require('../modeldata')
 const test = (req, res) => {
   res.send("hola");
 };
@@ -37,7 +38,7 @@ const createMob = async (req, res) => {
       team: team,
       color: color,
       mobtype: type,
-      life: team === "Boss" ? 1000 : 50,
+      life: life?life:team === "Boss" ? 1000 : 50,
     });
 
     res.status(200).send(newMob);
@@ -71,13 +72,13 @@ const deleteMob = async (req, res) => {
 const editMob = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, team, color, type } = req.body;
+    const { name, team, color, type,life  } = req.body;
 
     const update = await Mob.update(
       {
         name: name,
         team: team,
-        life: team === "boss" ? 1000 : 50,
+        life: life? life : team === "Boss" ? 1000 : 50,
         color: color,
         mobtype: type,
       },
@@ -114,10 +115,8 @@ const aux = async () => {
 };
 const getModels = async (req, res) => {
   try {
-    const json = await Model.findAll();
-    // console.log("CANTIDAD: ", json);
-    // aux();
-    res.status(200).send(json);
+  //  console.log('LA DATA MODELOS:  ',dataModel)
+    res.status(200).json(dataModel);
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);

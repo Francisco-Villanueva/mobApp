@@ -1,20 +1,21 @@
 .form-container{
   margin: 1em auto
 }
+.modal-head{
+  background-color: #4e5ba9;
+  font-family: 'Montserrat';
+  font-weight: 800;
+}
+.modal-body{
+  background-color: #fff;
+  font-family: 'Montserrat';
+  font-weight: 800;
+}
+
 .form-main {
-  display: grid;
-  width: 75vw;
-  margin: 0 auto;
-  box-shadow: 1px 1px 20px #000;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  color: #fff;
-  background-color: #1e264bd5;
-  height: 80vh;
-  backdrop-filter: blur(10px);
-  font-weight: 600;
-  min-height: 100%;
-  object-fit: contain;
 }
 .form-data {
   display: flex;
