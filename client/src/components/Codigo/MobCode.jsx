@@ -163,16 +163,16 @@ dir give{
  ${bossArr
    .map(
      (e, i) =>
-       `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${
-         e.team
-       } ${numberIndex(i + 1)}\n `
+       `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${numberIndex(
+         i + 1
+       )}\n `
    )
    .join("")}${allyArr
             .map(
               (e, i) =>
-                `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${
-                  e.team
-                } ${numberIndex(i + 1)}\n `
+                `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(
+                  e.name
+                )} ${numberIndex(i + 1)}\n `
             )
             .join("")}
   }
@@ -215,7 +215,9 @@ dir spawns{
     .map(
       (e, i) =>
         `\tfunction mob_boss_${numberIndex(i + 1)} { \n` +
-        `\t\tkipper_boss ${e.mobtype[1]} ${e.name} ${e.color} 1000.0 Silent:0b\n ` +
+        `\t\tkipper_boss ${e.mobtype[1]} ${nameTag(e.name)} ${
+          e.color
+        } 1000.0 Silent:0b\n ` +
         "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
         "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
         "\t}\n "
@@ -235,9 +237,9 @@ ${allyArr
   .map(
     (e, i) =>
       `\tfunction ally_${numberIndex(i + 1)} { \n` +
-      `\t\tkipper_ally ${e.mobtype[1]} ${e.name} ${e.color} ${numberIndex(
-        i + 1
-      )} 50.0 Silent:0b\n ` +
+      `\t\tkipper_ally ${e.mobtype[1]} ${nameTag(e.name)} ${
+        e.color
+      } ${numberIndex(i + 1)} 50.0 Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -258,7 +260,9 @@ ${bossArr
   .map(
     (e, i) =>
       `\tfunction costume_boss_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.mobtype[1]} ${e.name} ${e.color} Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype[1]} ${nameTag(e.name)} ${
+        e.color
+      } Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -266,7 +270,9 @@ ${allyArr
   .map(
     (e, i) =>
       `\tfunction costume_${numberIndex(i + 1)} {\n` +
-      `\t\tkipper_costume ${e.mobtype[1]} ${e.name} ${e.color} Silent:0b\n ` +
+      `\t\tkipper_costume ${e.mobtype[1]} ${nameTag(e.name)} ${
+        e.color
+      } Silent:0b\n ` +
       "\t}\n"
   )
   .join("")}
@@ -355,7 +361,7 @@ ${bossArr
   .join("")}${allyArr
             .map(
               (e, i) =>
-                `\t\ttexecute if entity @s[tag=kip.summon.${numberIndex(
+                `\t\texecute if entity @s[tag=kip.summon.${numberIndex(
                   i + 1
                 )}] run function kip:spawns/ally_${numberIndex(i + 1)} \n`
             )
@@ -564,7 +570,8 @@ ${
    }  
 
   } 
- 
+} 
+
 # ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄    ▄          ▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄ 
 #▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌  ▐░▌       ▄█░░░░▌    ▐░░░░░░░░░░░▌
 # ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌ ▐░▌       ▐░░▌▐░░▌    ▐░█▀▀▀▀▀▀▀▀▀ 
