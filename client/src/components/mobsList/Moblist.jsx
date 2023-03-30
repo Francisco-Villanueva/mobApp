@@ -175,7 +175,7 @@ export default function MobList({ mobs, models }) {
 
       <div className="scale-in-ver-bottom code-generator-main">
         <button onClick={handleShowModal} className="code-generator">
-          <p>Add Mob</p>
+          <p>agregar Mob</p>
           <FontAwesomeIcon icon={faCode} />
         </button>
       </div>
