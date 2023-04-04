@@ -192,7 +192,7 @@ dir give{
  ${bossArr
    .map(
      (e, i) =>
-       `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} ${numberIndex(
+       `\t\t kipper_egg ${e.mobtype[2]} ${nameTag(e.name)} boss_${numberIndex(
          i + 1
        )}\n `
    )
