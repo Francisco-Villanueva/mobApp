@@ -250,7 +250,9 @@ dir spawns{
           e.color
         } boss_${numberIndex(i + 1)} 1000.0 Silent:0b\n ` +
         "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
-        "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
+        `\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss_${numberIndex(
+          i + 1
+        )} 40\n` +
         "\t}\n "
     )
     .join("")}
