@@ -1,5 +1,6 @@
 .mobList-container {
   width: 90vw;
+  margin-top: 3rem;
 }
 
 .btnForm-style {
@@ -23,7 +24,7 @@
   border-radius: 1rem;
   width: 15vw;
   margin: auto;
-  
+
   padding: 1em 0;
   cursor: pointer;
 
@@ -56,9 +57,9 @@
   background-color: #4e5ba9;
 }
 
-.table-row td{
+.table-row td {
   text-transform: capitalize;
-  text-align: start
+  text-align: start;
 }
 
 /* ----------------------------------------------

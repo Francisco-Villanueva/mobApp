@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
   min-height: 100vh;
   background: rgb(151, 159, 255);
   background: linear-gradient(
@@ -14,7 +14,7 @@
   -webkit-animation: bg-pan-top 8s infinite both;
   animation: bg-pan-top 8s infinite both;
 
-  display: grid;
+  /* display: grid; */
 }
 .app-body {
   display: flex;

@@ -248,7 +248,7 @@ dir spawns{
         `\tfunction mob_boss_${numberIndex(i + 1)} { \n` +
         `\t\tkipper_boss ${e.mobtype[1]} ${nameTag(e.name)} ${
           e.color
-        } 1000.0 Silent:0b\n ` +
+        } boss_${numberIndex(i + 1)} 1000.0 Silent:0b\n ` +
         "\t\t#Make a linked bossbar for the boss. Adjust color and range as necessary\n" +
         "\t\tlbb add @e[tag=kip.mob.boss,limit=1,sort=nearest] white progress boss 40\n" +
         "\t}\n "
@@ -427,8 +427,8 @@ ${bossArr
      # ████████  █████  ██████   ██████  ███████ ████████     ███████ ███████ ████████ ████████ ██ ███    ██  ██████  ███████ 
      #    ██    ██   ██ ██   ██ ██       ██         ██        ██      ██         ██       ██    ██ ████   ██ ██       ██      
      #    ██    ███████ ██████  ██   ███ █████      ██        ███████ █████      ██       ██    ██ ██ ██  ██ ██   ███ ███████ 
-     #   █ █    ██   ██ ██   ██ ██    ██ ██         ██             ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██ 
-     #   ██     ██   ██ ██   ██  ██████  ███████    ██        ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████ 
+     #    ██    ██   ██ ██   ██ ██    ██ ██         ██             ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██ 
+     #    ██    ██   ██ ██   ██  ██████  ███████    ██        ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████ 
                                                                                                                        
       #Determines how mobs seek out their targets. Right now all ally mobs share the same target-seeking parameters, 
       #but you can break it up for specific mobs if you want. The ally_line_of_sight function checks
@@ -496,7 +496,7 @@ ${bossArr
             name boss_hostile_behavior
             scoreboard players add @s kip.attack.timer 0
             scoreboard players add @s kip.attack.timer 1
-
+        }
       ${bossArr
         .map(
           (e, i) => `
@@ -542,6 +542,7 @@ ${bossArr
         )
         .join("")}      
         }
+      }
       }     
       
      #  █████  ██      ██      ██ ███████ ███████ 
