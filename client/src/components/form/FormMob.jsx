@@ -16,7 +16,6 @@ export default function FormMob({
   handleCloseModal,
   models,
 }) {
-
   // console.log('MOB A EDIAR => ', mobToEdit)
   const dispatch = useDispatch();
 
@@ -25,15 +24,19 @@ export default function FormMob({
     type: [],
     team: "",
     color: "",
-    life:"",
+    life: "",
   });
 
   const handleInputChange = (e) => {
     if (e.target.name === "type") {
-
       let modelFilt = models.filter((t) => t.name == e.target.value);
 
-      console.group('HOLA VALORES: ',modelFilt[0].type , ' +  ', modelFilt[0].spawnegg )
+      console.group(
+        "HOLA VALORES: ",
+        modelFilt[0].type,
+        " +  ",
+        modelFilt[0].spawnegg
+      );
       setMobData({
         ...mobData,
         [e.target.name]: [
@@ -67,12 +70,12 @@ export default function FormMob({
 
   return (
     <div className="form-container">
-      <Modal show={showModal} onHide={handleCloseModal} className='modal-main'>
-        <Modal.Header closeButton className='modal-head'>
-          <Modal.Title>{editing ? "Editar Mob" : "Crear Mob"}</Modal.Title>
+      <Modal show={showModal} onHide={handleCloseModal} className="modal-main">
+        <Modal.Header closeButton className="modal-head">
+          <Modal.Title>{editing ? "Edit Mob" : "Create Mob"}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className='modal-body'>
-          <Form onSubmit={handleSubmit} className='form-main'>
+        <Modal.Body className="modal-body">
+          <Form onSubmit={handleSubmit} className="form-main">
             <Form.Group className="  formInput" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -89,7 +92,7 @@ export default function FormMob({
               <div>
                 <Form.Control
                   name="life"
-                  type='number'
+                  type="number"
                   onChange={(e) => handleInputChange(e)}
                   defaultValue={0}
                 />
@@ -145,10 +148,7 @@ export default function FormMob({
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          
-        </Modal.Footer>
-        
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </div>
   );

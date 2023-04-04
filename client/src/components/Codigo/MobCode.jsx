@@ -57,9 +57,38 @@ export default function MobCode({ mobs }) {
         break;
     }
   };
+  const numberIndexANSI = (num) => {
+    switch (num) {
+      case 1:
+        return "one";
+      case 2:
+        return "two";
+      case 3:
+        return "three";
+      case 4:
+        return "four";
+      case 5:
+        return "five";
+      case 6:
+        return "six";
+      case 7:
+        return "seven";
+      case 8:
+        return "eight";
+      case 9:
+        return "nine";
+      case 10:
+        return "ten";
+      case 11:
+        return "eleven";
+
+      default:
+        break;
+    }
+  };
   const downloadFile = () => {
     const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "code.mc");
+    saveAs(blob, "kip.mc");
   };
   const copyToClipboard = () => {
     const txt = document.getElementById("codigoId").innerText;
@@ -201,11 +230,13 @@ dir give{
 #as well as where you'll want to set its scale.
 
 dir spawns{
-  #    ___               
-  #   / __\ ___  ___ ___ 
-  #  /__\/// _ \/ __/ __|
-  # / \/  \ (_) \__ \__ \
-  # \_____/\___/|___/___/
+  #              
+  # ██████   ██████  ███████ ███████ 
+  # ██   ██ ██    ██ ██      ██      
+  # ██████  ██    ██ ███████ ███████ 
+  # ██   ██ ██    ██      ██      ██ 
+  # ██████   ██████  ███████ ███████ 
+                                  
   #Summon for boss mob
   #Note that the boss should always be vulnerable and is not affected by the mob_deaths_disable trigger
   #The Macro handles most everything for you so it can look clean and be pretty easy. Here's how it works:
@@ -224,11 +255,12 @@ dir spawns{
     )
     .join("")}
 
-  #    _   _ _ _           
-  #   /_\ | | (_) ___  ___ 
-  #  //_\\| | | |/ _ \/ __|
-  # /  _  \ | | |  __/\__ \
-  # \_/ \_/_|_|_|\___||___/
+  #   █████  ██      ██      ██ ███████ ███████ 
+  #  ██   ██ ██      ██      ██ ██      ██      
+  #  ███████ ██      ██      ██ █████   ███████ 
+  #  ██   ██ ██      ██      ██ ██           ██ 
+  #  ██   ██ ███████ ███████ ██ ███████ ███████ 
+                                               
   #Each ally has its own Spawn function. Should not be renamed, as these are what get called by the spawn eggs!
   #The Macro handles most everything for you so it can look clean and be pretty easy. Here's how it works:
   #kipper_ally [base_mob] [Name] [Color of name] [which mob number it is, spelled out] [Health as X.0 (no f)] [Additional NBT (optional)]
@@ -245,11 +277,11 @@ ${allyArr
   .join("")}
 
 
-#    ___          _                             
-#   / __\___  ___| |_ _   _ _ __ ___   ___  ___ 
-#  / /  / _ \/ __| __| | | |  
-# / /__| (_) \__ \ |_| |_| | | | | | |  __/\__ \
-# \____/\___/|___/\__|\__,_|_| |_| |_|\___||___/
+#   ██████  ██████  ███████ ████████ ██    ██ ███    ███ ███████ ███████ 
+#  ██      ██    ██ ██         ██    ██    ██ ████  ████ ██      ██      
+#  ██      ██    ██ ███████    ██    ██    ██ ██ ████ ██ █████   ███████ 
+#  ██      ██    ██      ██    ██    ██    ██ ██  ██  ██ ██           ██ 
+#   ██████  ██████  ███████    ██     ██████  ██      ██ ███████ ███████
 
     #Each mob also gets a costume function. In theory the only thing you need to change is the mob type and the scale, if any.
     #These costumes don't need to care about vulnerability. They only exist as basically a temporary costume for the player.
@@ -315,11 +347,11 @@ function tick{
 
      #
      #
-     #████████ ██████  ██  ██████   ██████  ███████ ██████  ███████ 
-     #   ██    ██   ██ ██ ██       ██       ██      ██   ██ ██      
-     #   ██    ██████  ██ ██   ███ ██   ███ █████   ██████  ███████ 
-     #   ██    ██   ██ ██ ██    ██ ██    ██ ██      ██   ██      ██ 
-     #   ██    ██   ██ ██  ██████   ██████  ███████ ██   ██ ███████ 
+     # ████████ ██████  ██  ██████   ██████  ███████ ██████  ███████ 
+     #    ██    ██   ██ ██ ██       ██       ██      ██   ██ ██      
+     #    ██    ██████  ██ ██   ███ ██   ███ █████   ██████  ███████ 
+     #    ██    ██   ██ ██ ██    ██ ██    ██ ██      ██   ██      ██ 
+     #    ██    ██   ██ ██  ██████   ██████  ███████ ██   ██ ███████ 
    
 
       #New give trigger
@@ -333,20 +365,20 @@ function tick{
       #Mob control triggers macro
       kipper_mob_control_triggers
   }
-  #████████ ██  ██████ ██   ██     ███████ ███    ██ ████████ ██ ████████ ██ ███████ ███████ 
-  #   ██    ██ ██      ██  ██      ██      ████   ██    ██    ██    ██    ██ ██      ██      
-  #   ██    ██ ██      █████       █████   ██ ██  ██    ██    ██    ██    ██ █████   ███████ 
-  #   ██    ██ ██      ██  ██      ██      ██  ██ ██    ██    ██    ██    ██ ██           ██ 
-  #   ██    ██  ██████ ██   ██     ███████ ██   ████    ██    ██    ██    ██ ███████ ███████ 
+  # ████████ ██  ██████ ██   ██     ███████ ███    ██ ████████ ██ ████████ ██ ███████ ███████ 
+  #    ██    ██ ██      ██  ██      ██      ████   ██    ██    ██    ██    ██ ██      ██      
+  #    ██    ██ ██      █████       █████   ██ ██  ██    ██    ██    ██    ██ █████   ███████ 
+  #    ██    ██ ██      ██  ██      ██      ██  ██ ██    ██    ██    ██    ██ ██           ██ 
+  #    ██    ██  ██████ ██   ██     ███████ ██   ████    ██    ██    ██    ██ ███████ ███████ 
   #Runs entity-specific functions
   execute as @e[type=!player] at @s run {
     name tick_entities
 
-  #███████ ██████   █████  ██     ██ ███    ██     ███████  ██████   ██████  ███████ 
-  #██      ██   ██ ██   ██ ██     ██ ████   ██     ██      ██       ██       ██      
-  #███████ ██████  ███████ ██  █  ██ ██ ██  ██     █████   ██   ███ ██   ███ ███████ 
-  #     ██ ██      ██   ██ ██ ███ ██ ██  ██ ██     ██      ██    ██ ██    ██      ██ 
-  #███████ ██      ██   ██  ███ ███  ██   ████     ███████  ██████   ██████  ███████ 
+  # ███████ ██████   █████  ██     ██ ███    ██     ███████  ██████   ██████  ███████ 
+  # ██      ██   ██ ██   ██ ██     ██ ████   ██     ██      ██       ██       ██      
+  # ███████ ██████  ███████ ██  █  ██ ██ ██  ██     █████   ██   ███ ██   ███ ███████ 
+  #      ██ ██      ██   ██ ██ ███ ██ ██  ██ ██     ██      ██    ██ ██    ██      ██ 
+  # ███████ ██      ██   ██  ███ ███  ██   ████     ███████  ██████   ██████  ███████ 
                                                                                     
 
   #Spawn Egg summons
@@ -377,11 +409,11 @@ ${bossArr
     #costume behavior macro. Do not remove!
     kipper_costume_behavior
 
-    # ██████ ██    ██ ███████ ████████  ██████  ███    ███     ███    ███  ██████  ██████  ███████ 
-    #██      ██    ██ ██         ██    ██    ██ ████  ████     ████  ████ ██    ██ ██   ██ ██      
-    #██      ██    ██ ███████    ██    ██    ██ ██ ████ ██     ██ ████ ██ ██    ██ ██████  ███████ 
-    #██      ██    ██      ██    ██    ██    ██ ██  ██  ██     ██  ██  ██ ██    ██ ██   ██      ██ 
-    # ██████  ██████  ███████    ██     ██████  ██      ██     ██      ██  ██████  ██████  ███████ 
+    #  ██████ ██    ██ ███████ ████████  ██████  ███    ███     ███    ███  ██████  ██████  ███████ 
+    # ██      ██    ██ ██         ██    ██    ██ ████  ████     ████  ████ ██    ██ ██   ██ ██      
+    # ██      ██    ██ ███████    ██    ██    ██ ██ ████ ██     ██ ████ ██ ██    ██ ██████  ███████ 
+    # ██      ██    ██      ██    ██    ██    ██ ██  ██  ██     ██  ██  ██ ██    ██ ██   ██      ██ 
+    #  ██████  ██████  ███████    ██     ██████  ██      ██     ██      ██  ██████  ██████  ███████ 
   
     #Custom Mobs Behavior
     #This is where the behavior for all of the remodeled mobs is covered and broken down by subsection.
@@ -393,10 +425,10 @@ ${bossArr
       kipper_mob_trigger_settings
 
      # ████████  █████  ██████   ██████  ███████ ████████     ███████ ███████ ████████ ████████ ██ ███    ██  ██████  ███████ 
-     #   ██    ██   ██ ██   ██ ██       ██         ██        ██      ██         ██       ██    ██ ████   ██ ██       ██      
-     #   ██    ███████ ██████  ██   ███ █████      ██        ███████ █████      ██       ██    ██ ██ ██  ██ ██   ███ ███████ 
-     #   ██    ██   ██ ██   ██ ██    ██ ██         ██             ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██ 
-     #   ██    ██   ██ ██   ██  ██████  ███████    ██        ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████ 
+     #    ██    ██   ██ ██   ██ ██       ██         ██        ██      ██         ██       ██    ██ ████   ██ ██       ██      
+     #    ██    ███████ ██████  ██   ███ █████      ██        ███████ █████      ██       ██    ██ ██ ██  ██ ██   ███ ███████ 
+     #   █ █    ██   ██ ██   ██ ██    ██ ██         ██             ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██ 
+     #   ██     ██   ██ ██   ██  ██████  ███████    ██        ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████ 
                                                                                                                        
       #Determines how mobs seek out their targets. Right now all ally mobs share the same target-seeking parameters, 
       #but you can break it up for specific mobs if you want. The ally_line_of_sight function checks
@@ -435,11 +467,12 @@ ${bossArr
         }
       } 
 
-    #  ███████ ███████ ██████  ███████  ██████ ██  █████  ██           █████  ████████ ████████  █████   ██████ ██   ██ 
-    #  ██      ██      ██   ██ ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
-    #  █████   ███████ ██████  █████   ██      ██ ███████ ██          ███████    ██       ██    ███████ ██      █████   
-    #  ██           ██ ██      ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
-    #  ███████ ███████ ██      ███████  ██████ ██ ██   ██ ███████     ██   ██    ██       ██    ██   ██  ██████ ██   ██ 
+    #  ███████ ██████  ███████  ██████ ██  █████  ██           █████  ████████ ████████  █████   ██████ ██   ██ 
+    #  ██      ██   ██ ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
+    #  ███████ ██████  █████   ██      ██ ███████ ██          ███████    ██       ██    ███████ ██      █████   
+    #       ██ ██      ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
+    #  ███████ ██      ███████  ██████ ██ ██   ██ ███████     ██   ██    ██       ██    ██   ██  ██████ ██   ██ 
+                                                                                                               
       #This section is for all of the mobs' special attacks. Most will only have one, or two, with any further abilities being passive, if any.
       #Remember that mobs with renaged attacks should keep a good distance from their target so the projectiles can be seen. Use the move_towards_entity
       #to aid in follow behavior. You can define a distance in the target selector for the macro to make a mob only move towards it until it gets to a certain range.
@@ -532,7 +565,7 @@ ${bossArr
       .map(
         (e, i) => `
     #
-    # ${numberIndex(i + 1)}
+    # ${numberIndexANSI(i + 1)}
     #
     #
     #${e.name} 
