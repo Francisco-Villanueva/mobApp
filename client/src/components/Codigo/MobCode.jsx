@@ -315,10 +315,12 @@ function tick{
 
      #
      #
-     # triggers
-     #
-     #
-     # 
+     #████████ ██████  ██  ██████   ██████  ███████ ██████  ███████ 
+     #   ██    ██   ██ ██ ██       ██       ██      ██   ██ ██      
+     #   ██    ██████  ██ ██   ███ ██   ███ █████   ██████  ███████ 
+     #   ██    ██   ██ ██ ██    ██ ██    ██ ██      ██   ██      ██ 
+     #   ██    ██   ██ ██  ██████   ██████  ███████ ██   ██ ███████ 
+   
 
       #New give trigger
       scoreboard players enable @s give_all_items
@@ -339,11 +341,14 @@ function tick{
   #Runs entity-specific functions
   execute as @e[type=!player] at @s run {
     name tick_entities
-  #
-  # SPAWN EGGS
-  #
-  #
-  #
+
+  #███████ ██████   █████  ██     ██ ███    ██     ███████  ██████   ██████  ███████ 
+  #██      ██   ██ ██   ██ ██     ██ ████   ██     ██      ██       ██       ██      
+  #███████ ██████  ███████ ██  █  ██ ██ ██  ██     █████   ██   ███ ██   ███ ███████ 
+  #     ██ ██      ██   ██ ██ ███ ██ ██  ██ ██     ██      ██    ██ ██    ██      ██ 
+  #███████ ██      ██   ██  ███ ███  ██   ████     ███████  ██████   ██████  ███████ 
+                                                                                    
+
   #Spawn Egg summons
   #This is where the Markers that come out of the Spawn Egg items (Give section) become the appropriate mob.
   #This way, you can define a summon animation or otherwise just scale them up appropriately in their Spawn function
@@ -372,11 +377,12 @@ ${bossArr
     #costume behavior macro. Do not remove!
     kipper_costume_behavior
 
-    #
-    # CUSTOM MOBS
-    #
-    #
-    #
+    # ██████ ██    ██ ███████ ████████  ██████  ███    ███     ███    ███  ██████  ██████  ███████ 
+    #██      ██    ██ ██         ██    ██    ██ ████  ████     ████  ████ ██    ██ ██   ██ ██      
+    #██      ██    ██ ███████    ██    ██    ██ ██ ████ ██     ██ ████ ██ ██    ██ ██████  ███████ 
+    #██      ██    ██      ██    ██    ██    ██ ██  ██  ██     ██  ██  ██ ██    ██ ██   ██      ██ 
+    # ██████  ██████  ███████    ██     ██████  ██      ██     ██      ██  ██████  ██████  ███████ 
+  
     #Custom Mobs Behavior
     #This is where the behavior for all of the remodeled mobs is covered and broken down by subsection.
  
@@ -386,11 +392,12 @@ ${bossArr
       #Macro for mob control trigger settings. Do not remove!
       kipper_mob_trigger_settings
 
-      #
-      #
-      # TARGET SETTINGS
-      #
-      #
+     # ████████  █████  ██████   ██████  ███████ ████████     ███████ ███████ ████████ ████████ ██ ███    ██  ██████  ███████ 
+     #   ██    ██   ██ ██   ██ ██       ██         ██        ██      ██         ██       ██    ██ ████   ██ ██       ██      
+     #   ██    ███████ ██████  ██   ███ █████      ██        ███████ █████      ██       ██    ██ ██ ██  ██ ██   ███ ███████ 
+     #   ██    ██   ██ ██   ██ ██    ██ ██         ██             ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██ 
+     #   ██    ██   ██ ██   ██  ██████  ███████    ██        ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████ 
+                                                                                                                       
       #Determines how mobs seek out their targets. Right now all ally mobs share the same target-seeking parameters, 
       #but you can break it up for specific mobs if you want. The ally_line_of_sight function checks
       #that they aren't targeting something they can't see. Note that this isn't perfect, as if one mob targets a mob,
@@ -428,20 +435,22 @@ ${bossArr
         }
       } 
 
-      #
-      #
-      # ESPECIAL ATTACK
-      #
-      #
+    #  ███████ ███████ ██████  ███████  ██████ ██  █████  ██           █████  ████████ ████████  █████   ██████ ██   ██ 
+    #  ██      ██      ██   ██ ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
+    #  █████   ███████ ██████  █████   ██      ██ ███████ ██          ███████    ██       ██    ███████ ██      █████   
+    #  ██           ██ ██      ██      ██      ██ ██   ██ ██          ██   ██    ██       ██    ██   ██ ██      ██  ██  
+    #  ███████ ███████ ██      ███████  ██████ ██ ██   ██ ███████     ██   ██    ██       ██    ██   ██  ██████ ██   ██ 
       #This section is for all of the mobs' special attacks. Most will only have one, or two, with any further abilities being passive, if any.
       #Remember that mobs with renaged attacks should keep a good distance from their target so the projectiles can be seen. Use the move_towards_entity
       #to aid in follow behavior. You can define a distance in the target selector for the macro to make a mob only move towards it until it gets to a certain range.
 
 
-      #
-      #
-      # BOSS
-      #
+   #   ██████   ██████  ███████ ███████ 
+   #   ██   ██ ██    ██ ██      ██      
+   #   ██████  ██    ██ ███████ ███████ 
+   #   ██   ██ ██    ██      ██      ██ 
+   #   ██████   ██████  ███████ ███████ 
+                                       
       #Boss mob special attacks work a bit differently than ally mobs, since it has 4 that need to be able to be manually triggered.
       #If the next attack hasn't already been selected with the boss_attack trigger, then it'll randomly select an attack. Note that you may need to apply some
       #extra logic in the event the randomly chosen attack can't be used for whatever reason, such as if it's a melee attack but there's no target in range.
@@ -502,9 +511,12 @@ ${bossArr
         }
       }     
       
-      #
-      #
-      #ALLIES
+     #  █████  ██      ██      ██ ███████ ███████ 
+     # ██   ██ ██      ██      ██ ██      ██      
+     # ███████ ██      ██      ██ █████   ███████ 
+     # ██   ██ ██      ██      ██ ██           ██ 
+     # ██   ██ ███████ ███████ ██ ███████ ███████ 
+                                                 
       #You'll need to make a new section for each remodeled ally mob here.
       #You can define a different follow range and speed, as well as an attack(s) based on target range.
       #Ally mobs only. If mobs_attack enabled, performs special attacks against target(s)
